@@ -1,234 +1,134 @@
 'use strict';
 
 const functions = require('firebase-functions');
-const { WebhookClient } = require('dialogflow-fulfillment');
-const { Card, Suggestion } = require('dialogflow-fulfillment');
-const { SimpleResponse,BrowseCarousel,BrowseCarouselItem,Image } = require('actions-on-google');
-process.env.DEBUG = 'dialogflow:debug';
+const { dialogflow } = require('actions-on-google');
+const { Image, Suggestions, LinkOutSuggestion, BrowseCarousel, BrowseCarouselItem, SimpleResponse } = require('actions-on-google');
+const request = require("request")
+const rp = require('request-promise');
 
-var result=["Here's the result","There it is.","Here you go","I got it!","Gotcha!"];
+const app = dialogflow();
 
-var admin = require("firebase-admin");
-admin.initializeApp({
-  databaseURL: "https://maimai-bot.firebaseio.com/"
+
+
+app.intent('random-niconico', (conv) => {
+  var options = {
+    uri: 'https://maimaibot.rayriffy.com/nico.json',
+    headers: {
+        'User-Agent': 'Request-Promise'
+    },
+    json: true 
+  };
+  return rp(options)
+        .then(detail => showCard(detail, conv))
+        .then(p => Promise.all(p))
+        .catch(p => console.log("error: " + p));
+
+});
+app.intent('random-anime', (conv) => {
+  var options = {
+    uri: 'https://maimaibot.rayriffy.com/pops.json',
+    headers: {
+        'User-Agent': 'Request-Promise'
+    },
+    json: true 
+  };
+  return rp(options)
+        .then(detail => showCard(detail, conv))
+        .then(p => Promise.all(p))
+        .catch(p => console.log("error: " + p));
+
+});
+app.intent('random-original', (conv) => {
+  var options = {
+    uri: 'https://maimaibot.rayriffy.com/orig.json',
+    headers: {
+        'User-Agent': 'Request-Promise'
+    },
+    json: true 
+  };
+  return rp(options)
+        .then(detail => showCard(detail, conv))
+        .then(p => Promise.all(p))
+        .catch(p => console.log("error: " + p));
+
+});
+app.intent('random-sega', (conv) => {
+  var options = {
+    uri: 'https://maimaibot.rayriffy.com/sega.json',
+    headers: {
+        'User-Agent': 'Request-Promise'
+    },
+    json: true 
+  };
+  return rp(options)
+        .then(detail => showCard(detail, conv))
+        .then(p => Promise.all(p))
+        .catch(p => console.log("error: " + p));
+
+});
+app.intent('random-game', (conv) => {
+  var options = {
+    uri: 'https://maimaibot.rayriffy.com/game.json',
+    headers: {
+        'User-Agent': 'Request-Promise'
+    },
+    json: true 
+  };
+  return rp(options)
+        .then(detail => showCard(detail, conv))
+        .then(p => Promise.all(p))
+        .catch(p => console.log("error: " + p));
+
+});
+app.intent('random-touhou', (conv) => {
+  var options = {
+    uri: 'https://maimaibot.rayriffy.com/toho.json',
+    headers: {
+        'User-Agent': 'Request-Promise'
+    },
+    json: true 
+  };
+  return rp(options)
+        .then(detail => showCard(detail, conv))
+        .then(p => Promise.all(p))
+        .catch(p => console.log("error: " + p));
+
 });
 
-exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, response) => {
-  const agent = new WebhookClient({ request, response });
-  console.log('Dialogflow Request headers: ' + JSON.stringify(request.headers));
-  console.log('Dialogflow Request body: ' + JSON.stringify(request.body));
-
-  function randomnico(agent) {
-    return admin.firestore().doc('nicovocaloid/'+ Math.floor(Math.random()*134)).get().then(doc => {
-      if(!doc.exists) {
-        console.log('ERR: No Document!');
-      }
-      else {
-        console.log('Document Found! >> ',doc.data().name.en);
-        if(doc.data().regionlocked==true) {
-          agent.add(result[Math.floor(Math.random()*result.length)]+` This is a region locked content`);
-        } else {
-          agent.add(result[Math.floor(Math.random()*result.length)]);
-        }
-        agent.add(new Card({
-          title: doc.data().name.en,
-          imageUrl: doc.data().image_url,
-          text: 'Author: ' + doc.data().artist.en + '\nIntroduced on: '+ doc.data().version,
-          buttonText: 'Listen on YouTube',
-          buttonUrl: doc.data().listen.youtube
-        }));
-        agent.add(new Suggestion(`Cancel`));
-        agent.add(new Suggestion(`POPS & ANIME`));
-        agent.add(new Suggestion(`niconico & VOCALOID`));
-        agent.add(new Suggestion(`TOUHOU Project`));
-        agent.add(new Suggestion(`SEGA`));
-        agent.add(new Suggestion(`GAME & VARIETY`));
-        agent.add(new Suggestion(`ORIGINAL & JOYPOLIS`));
-      }
-    }).catch(err => {
-      console.log('Error getting document ',err);
-    });
+function showCard(detail,conv) {
+  console.log('SAMPLE: '+detail[0].name_en);
+  var cards = [];
+  var is_regionlocked=null;
+  for(var i = 0; i < detail.length; i++) {
+    if(detail[i].regionlocked==1) {
+      is_regionlocked=1;
+    }
+    cards.push(new BrowseCarouselItem({
+      title: detail[i].name_en,
+      url: detail[i].listen_youtube,
+      image: new Image({
+        url: detail[i].image_url,
+        alt: 'Image',
+      }),
+      description: 'Author: '+detail[i].artist_en+' | Introduced on: '+detail[i].version,
+    }));
   }
-
-  function randomtouhou(agent) {
-    return admin.firestore().doc('touhou/'+ Math.floor(Math.random()*62)).get().then(doc => {
-      if(!doc.exists) {
-        console.log('ERR: No Document!');
-      }
-      else {
-        console.log('Document Found! >> ',doc.data().name.en);
-        if(doc.data().regionlocked==true) {
-          agent.add(result[Math.floor(Math.random()*result.length)]+` This is a region locked content`);
-        } else {
-          agent.add(result[Math.floor(Math.random()*result.length)]);
-        }
-        agent.add(new Card({
-          title: doc.data().name.en,
-          imageUrl: doc.data().image_url,
-          text: 'Author: ' + doc.data().artist.en + '\nIntroduced on: '+ doc.data().version,
-          buttonText: 'Listen on YouTube',
-          buttonUrl: doc.data().listen.youtube
-        }));
-        agent.add(new Suggestion(`Cancel`));
-        agent.add(new Suggestion(`POPS & ANIME`));
-        agent.add(new Suggestion(`niconico & VOCALOID`));
-        agent.add(new Suggestion(`TOUHOU Project`));
-        agent.add(new Suggestion(`SEGA`));
-        agent.add(new Suggestion(`GAME & VARIETY`));
-        agent.add(new Suggestion(`ORIGINAL & JOYPOLIS`));
-      }
-    }).catch(err => {
-      console.log('Error getting document ',err);
-    });
+  var action_rlock_text,action_rlock_speech;
+  if(is_regionlocked==1) {
+    action_rlock_text="Some of them are region locked.";
+    action_rlock_speech="<break time='300ms'/>Some of them are region locked.";
   }
-
-  function randomgame(agent) {
-    return admin.firestore().doc('game/'+ Math.floor(Math.random()*36)).get().then(doc => {
-      if(!doc.exists) {
-        console.log('ERR: No Document!');
-      }
-      else {
-        console.log('Document Found! >> ',doc.data().name.en);
-        if(doc.data().regionlocked==true) {
-          agent.add(result[Math.floor(Math.random()*result.length)]+` This is a region locked content`);
-        } else {
-          agent.add(result[Math.floor(Math.random()*result.length)]);
-        }
-        agent.add(new Card({
-          title: doc.data().name.en,
-          imageUrl: doc.data().image_url,
-          text: 'Author: ' + doc.data().artist.en + '\nIntroduced on: '+ doc.data().version,
-          buttonText: 'Listen on YouTube',
-          buttonUrl: doc.data().listen.youtube
-        }));
-        agent.add(new Suggestion(`Cancel`));
-        agent.add(new Suggestion(`POPS & ANIME`));
-        agent.add(new Suggestion(`niconico & VOCALOID`));
-        agent.add(new Suggestion(`TOUHOU Project`));
-        agent.add(new Suggestion(`SEGA`));
-        agent.add(new Suggestion(`GAME & VARIETY`));
-        agent.add(new Suggestion(`ORIGINAL & JOYPOLIS`));
-      }
-    }).catch(err => {
-      console.log('Error getting document ',err);
-    });
+  else {
+    action_rlock_text="";
+    action_rlock_speech="";
   }
+  conv.ask(new SimpleResponse({
+    speech: '<speak>Here are the results.'+action_rlock_speech+'</speak>',
+    text: "Here're the results."+action_rlock_text,
+  }));
+  conv.ask(new BrowseCarousel({items: cards}));
+  conv.ask(new Suggestions(['Cancel', 'POPS & ANIME', 'niconico & VOCALOID', 'TOUHOU Project','SEGA','GAME & VARIETY','ORIGINAL & JOYPOLIS']));
+  return;
+}
 
-  function randomsega(agent) {
-    return admin.firestore().doc('sega/'+ Math.floor(Math.random()*61)).get().then(doc => {
-      if(!doc.exists) {
-        console.log('ERR: No Document!');
-      }
-      else {
-        console.log('Document Found! >> ',doc.data().name.en);
-        if(doc.data().regionlocked==true) {
-          agent.add(result[Math.floor(Math.random()*result.length)]+` This is a region locked content`);
-        } else {
-          agent.add(result[Math.floor(Math.random()*result.length)]);
-        }
-        agent.add(new Card({
-          title: doc.data().name.en,
-          imageUrl: doc.data().image_url,
-          text: 'Author: ' + doc.data().artist.en + '\nIntroduced on: '+ doc.data().version,
-          buttonText: 'Listen on YouTube',
-          buttonUrl: doc.data().listen.youtube
-        }));
-        agent.add(new Suggestion(`Cancel`));
-        agent.add(new Suggestion(`POPS & ANIME`));
-        agent.add(new Suggestion(`niconico & VOCALOID`));
-        agent.add(new Suggestion(`TOUHOU Project`));
-        agent.add(new Suggestion(`SEGA`));
-        agent.add(new Suggestion(`GAME & VARIETY`));
-        agent.add(new Suggestion(`ORIGINAL & JOYPOLIS`));
-      }
-    }).catch(err => {
-      console.log('Error getting document ',err);
-    });
-  }
-
-  function randomoriginal(agent) {
-    return admin.firestore().doc('original/'+ Math.floor(Math.random()*0)).get().then(doc => {
-      if(!doc.exists) {
-        console.log('ERR: No Document!');
-      }
-      else {
-        console.log('Document Found! >> ',doc.data().name.en);
-        if(doc.data().regionlocked==true) {
-          agent.add(result[Math.floor(Math.random()*result.length)]+` This is a region locked content`);
-        } else {
-          agent.add(result[Math.floor(Math.random()*result.length)]);
-        }
-        agent.add(new Card({
-          title: doc.data().name.en,
-          imageUrl: doc.data().image_url,
-          text: 'Author: ' + doc.data().artist.en + '\nIntroduced on: '+ doc.data().version,
-          buttonText: 'Listen on YouTube',
-          buttonUrl: doc.data().listen.youtube
-        }));
-        agent.add(new Suggestion(`Cancel`));
-        agent.add(new Suggestion(`POPS & ANIME`));
-        agent.add(new Suggestion(`niconico & VOCALOID`));
-        agent.add(new Suggestion(`TOUHOU Project`));
-        agent.add(new Suggestion(`SEGA`));
-        agent.add(new Suggestion(`GAME & VARIETY`));
-        agent.add(new Suggestion(`ORIGINAL & JOYPOLIS`));
-      }
-    }).catch(err => {
-      console.log('Error getting document ',err);
-    });
-  }
-
-  function randomanime(agent) {
-    return admin.firestore().doc('popanime/'+ Math.floor(Math.random()*0)).get().then(doc => {
-      if(!doc.exists) {
-        console.log('ERR: No Document!');
-      }
-      else {
-        console.log('Document Found! >> ',doc.data().name.en);
-        if(doc.data().regionlocked==true) {
-          agent.add(result[Math.floor(Math.random()*result.length)]+` This is a region locked content`);
-        } else {
-          agent.add(result[Math.floor(Math.random()*result.length)]);
-        }
-        agent.add(new Card({
-          title: doc.data().name.en,
-          imageUrl: doc.data().image_url,
-          text: 'Author: ' + doc.data().artist.en + '\nIntroduced on: '+ doc.data().version,
-          buttonText: 'Listen on YouTube',
-          buttonUrl: doc.data().listen.youtube
-        }));
-        agent.add(new Suggestion(`Cancel`));
-        agent.add(new Suggestion(`POPS & ANIME`));
-        agent.add(new Suggestion(`niconico & VOCALOID`));
-        agent.add(new Suggestion(`TOUHOU Project`));
-        agent.add(new Suggestion(`SEGA`));
-        agent.add(new Suggestion(`GAME & VARIETY`));
-        agent.add(new Suggestion(`ORIGINAL & JOYPOLIS`));
-      }
-    }).catch(err => {
-      console.log('Error getting document ',err);
-    });
-  }
-
-  function notavail(agent) {
-      agent.add(`Sorry, but your request category is temporarily unavailable.`);
-      agent.add(new Suggestion(`Cancel`));
-      agent.add(new Suggestion(`POPS & ANIME`));
-      agent.add(new Suggestion(`niconico & VOCALOID`));
-      agent.add(new Suggestion(`TOUHOU Project`));
-      agent.add(new Suggestion(`SEGA`));
-      agent.add(new Suggestion(`GAME & VARIETY`));
-      agent.add(new Suggestion(`ORIGINAL & JOYPOLIS`));
-  }
-
-  // Run the proper function handler based on the matched Dialogflow intent name
-  let intentMap = new Map();
-  intentMap.set('random-niconico', randomnico);
-  intentMap.set('random-touhou', randomtouhou);
-  intentMap.set('random-game', randomgame);
-  intentMap.set('random-sega', randomsega);
-  intentMap.set('random-original', randomoriginal);
-  intentMap.set('random-anime', randomanime);
-  // intentMap.set('<INTENT_NAME_HERE>', googleAssistantHandler);
-  agent.handleRequest(intentMap);
-});
+exports.dialogflowFirebaseFulfillment = functions.https.onRequest(app);
