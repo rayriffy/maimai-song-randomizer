@@ -1,0 +1,25 @@
+{
+  "name": "maimai-bot",
+  "description": "maimaibot-randomizer",
+  "version": "0.0.1",
+  "private": true,
+  "license": "Apache Version 2.0",
+  "author": "RiffyTech",
+  "engines": {
+    "node": ">=6.0.0"
+  },
+  "scripts": {
+    "start": "firebase serve --only functions:dialogflowFirebaseFulfillment",
+    "deploy": "firebase deploy --only functions:dialogflowFirebaseFulfillment"
+  },
+  "dependencies": {
+    "actions-on-google": "2.0.0-alpha.4",
+    "firebase-admin": "~5.12.0",
+    "firebase-functions": "^1.0.1",
+    "dialogflow": "^0.3.0",
+    "dialogflow-fulfillment": "0.3.0-beta.3",
+    "request": "2.85.0",
+    "request-promise": "4.2.2",
+    "time-ago": "0.2.1"
+  }
+}
