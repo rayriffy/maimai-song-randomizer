@@ -1,18 +1,17 @@
 'use strict';
 
-const functions = require('firebase-functions');
 const { dialogflow } = require('actions-on-google');
 const { Image, Suggestions, LinkOutSuggestion, BrowseCarousel, BrowseCarouselItem, SimpleResponse } = require('actions-on-google');
-const request = require("request")
+const request = require('request')
+const bodyParser = require('body-parser');
+const express = require('express');
 const rp = require('request-promise');
 
 const app = dialogflow();
 
-
-
 app.intent('random-niconico', (conv) => {
   var options = {
-    uri: 'https://maimaibot.rayriffy.com/nico.json',
+    uri: 'http://maimaibot.local/nico.json',
     headers: {
         'User-Agent': 'Request-Promise'
     },
@@ -26,7 +25,7 @@ app.intent('random-niconico', (conv) => {
 });
 app.intent('random-anime', (conv) => {
   var options = {
-    uri: 'https://maimaibot.rayriffy.com/pops.json',
+    uri: 'http://maimaibot.local/pops.json',
     headers: {
         'User-Agent': 'Request-Promise'
     },
@@ -40,7 +39,7 @@ app.intent('random-anime', (conv) => {
 });
 app.intent('random-original', (conv) => {
   var options = {
-    uri: 'https://maimaibot.rayriffy.com/orig.json',
+    uri: 'http://maimaibot.local/orig.json',
     headers: {
         'User-Agent': 'Request-Promise'
     },
@@ -54,7 +53,7 @@ app.intent('random-original', (conv) => {
 });
 app.intent('random-sega', (conv) => {
   var options = {
-    uri: 'https://maimaibot.rayriffy.com/sega.json',
+    uri: 'http://maimaibot.local/sega.json',
     headers: {
         'User-Agent': 'Request-Promise'
     },
@@ -68,7 +67,7 @@ app.intent('random-sega', (conv) => {
 });
 app.intent('random-game', (conv) => {
   var options = {
-    uri: 'https://maimaibot.rayriffy.com/game.json',
+    uri: 'http://maimaibot.local/game.json',
     headers: {
         'User-Agent': 'Request-Promise'
     },
@@ -82,7 +81,7 @@ app.intent('random-game', (conv) => {
 });
 app.intent('random-touhou', (conv) => {
   var options = {
-    uri: 'https://maimaibot.rayriffy.com/toho.json',
+    uri: 'http://maimaibot.local/toho.json',
     headers: {
         'User-Agent': 'Request-Promise'
     },
@@ -131,4 +130,4 @@ function showCard(detail,conv) {
   return;
 }
 
-exports.dialogflowFirebaseFulfillment = functions.https.onRequest(app);
+express().use(bodyParser.json(), app).listen(3000);
