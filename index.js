@@ -7,7 +7,7 @@ const bodyParser = require('body-parser');
 const express = require('express');
 const rp = require('request-promise');
 
-const app = dialogflow();
+const app = dialogflow({debug: false});
 
 app.intent('random-niconico', (conv) => {
   var options = {
@@ -20,7 +20,7 @@ app.intent('random-niconico', (conv) => {
   return rp(options)
         .then(detail => showCard(detail, conv))
         .then(p => Promise.all(p))
-        .catch(p => console.log("error: " + p));
+        .catch(p => console.log('\x1b[31merror:\x1b[0m '+ p));
 
 });
 app.intent('random-anime', (conv) => {
@@ -34,7 +34,7 @@ app.intent('random-anime', (conv) => {
   return rp(options)
         .then(detail => showCard(detail, conv))
         .then(p => Promise.all(p))
-        .catch(p => console.log("error: " + p));
+        .catch(p => console.log('\x1b[31merror:\x1b[0m '+ p));
 
 });
 app.intent('random-original', (conv) => {
@@ -48,7 +48,7 @@ app.intent('random-original', (conv) => {
   return rp(options)
         .then(detail => showCard(detail, conv))
         .then(p => Promise.all(p))
-        .catch(p => console.log("error: " + p));
+        .catch(p => console.log('\x1b[31merror:\x1b[0m '+ p));
 
 });
 app.intent('random-sega', (conv) => {
@@ -62,7 +62,7 @@ app.intent('random-sega', (conv) => {
   return rp(options)
         .then(detail => showCard(detail, conv))
         .then(p => Promise.all(p))
-        .catch(p => console.log("error: " + p));
+        .catch(p => console.log('\x1b[31merror:\x1b[0m '+ p));
 
 });
 app.intent('random-game', (conv) => {
@@ -76,7 +76,7 @@ app.intent('random-game', (conv) => {
   return rp(options)
         .then(detail => showCard(detail, conv))
         .then(p => Promise.all(p))
-        .catch(p => console.log("error: " + p));
+        .catch(err => console.log('\x1b[31merror:\x1b[0m '+ err));
 
 });
 app.intent('random-touhou', (conv) => {
@@ -90,12 +90,27 @@ app.intent('random-touhou', (conv) => {
   return rp(options)
         .then(detail => showCard(detail, conv))
         .then(p => Promise.all(p))
-        .catch(p => console.log("error: " + p));
+        .catch(p => console.log('\x1b[31merror:\x1b[0m '+ p));
 
+});
+app.intent('Welcome', (conv) => {
+  console.log('\x1b[33minfo:\x1b[0m Hit welcome intent');
+  conv.ask(new SimpleResponse({
+    speech: "<speak><s>Hello</s><break time='400ms'/>I will help you to choosing a perfect song to play<break time='600ms'/>Tell me<break time='200ms'/>what category do you want to play</speak>",
+    text: "Hello, I'm your assistant to help you choosing song to play. Just tell me what category do you want to play.",
+  }));
+  conv.ask(new Suggestions(['Cancel', 'POPS & ANIME', 'niconico & VOCALOID', 'TOUHOU Project','SEGA','GAME & VARIETY','ORIGINAL & JOYPOLIS']));
+});
+app.intent('end', (conv) => {
+  console.log('\x1b[33minfo:\x1b[0m Hit end intent');
+  conv.close(new SimpleResponse({
+    speech: "<speak><s>Okay!</s><break time='150ms' /><s>I hope you can find a good song to play there.</s><break time='300ms' /><s>Happy gaming!</s></speak>",
+    text: "Okay! I hope you can find a good song to play there... Happy gaming!",
+  }));
 });
 
 function showCard(detail,conv) {
-  console.log('SAMPLE: '+detail[0].name_en);
+  console.log('\x1b[33minfo:\x1b[0m '+ detail[0].name_en);
   var cards = [];
   var is_regionlocked=null;
   for(var i = 0; i < detail.length; i++) {

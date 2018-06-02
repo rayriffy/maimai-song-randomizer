@@ -6,11 +6,12 @@
   "license": "Apache Version 2.0",
   "author": "RiffyTech",
   "dependencies": {
-    "actions-on-google": "2.0.0-alpha.4",
+    "actions-on-google": "^2.0.0-alpha.4",
     "body-parser": "^1.18.3",
     "express": "^4.16.3",
+    "pm2": "^2.10.4",
     "request": "2.85.0",
-    "request-promise": "4.2.2",
-    "time-ago": "0.2.1"
+    "request-promise": "^4.2.2",
+    "time-ago": "^0.2.1"
   }
 }
