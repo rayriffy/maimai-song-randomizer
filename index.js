@@ -10,6 +10,7 @@ const rp = require('request-promise');
 const app = dialogflow({debug: false});
 
 app.intent('random-niconico', (conv) => {
+  console.log('\x1b[33minfo:\x1b[0m Hit niconico & VOCALOID intent');
   var options = {
     uri: 'http://maimaibot.local/nico.json',
     headers: {
@@ -24,6 +25,7 @@ app.intent('random-niconico', (conv) => {
 
 });
 app.intent('random-anime', (conv) => {
+  console.log('\x1b[33minfo:\x1b[0m Hit POPS & ANIME intent');
   var options = {
     uri: 'http://maimaibot.local/pops.json',
     headers: {
@@ -38,6 +40,7 @@ app.intent('random-anime', (conv) => {
 
 });
 app.intent('random-original', (conv) => {
+  console.log('\x1b[33minfo:\x1b[0m Hit ORIGINAL & JOYPOLIS intent');
   var options = {
     uri: 'http://maimaibot.local/orig.json',
     headers: {
@@ -52,6 +55,7 @@ app.intent('random-original', (conv) => {
 
 });
 app.intent('random-sega', (conv) => {
+  console.log('\x1b[33minfo:\x1b[0m Hit SEGA intent');
   var options = {
     uri: 'http://maimaibot.local/sega.json',
     headers: {
@@ -66,6 +70,7 @@ app.intent('random-sega', (conv) => {
 
 });
 app.intent('random-game', (conv) => {
+  console.log('\x1b[33minfo:\x1b[0m Hit GAMES & VARIETY intent');
   var options = {
     uri: 'http://maimaibot.local/game.json',
     headers: {
@@ -80,6 +85,7 @@ app.intent('random-game', (conv) => {
 
 });
 app.intent('random-touhou', (conv) => {
+  console.log('\x1b[33minfo:\x1b[0m Hit TOUHOU Project intent');
   var options = {
     uri: 'http://maimaibot.local/toho.json',
     headers: {
@@ -96,7 +102,7 @@ app.intent('random-touhou', (conv) => {
 app.intent('Welcome', (conv) => {
   console.log('\x1b[33minfo:\x1b[0m Hit welcome intent');
   conv.ask(new SimpleResponse({
-    speech: "<speak><s>Hello</s><break time='400ms'/>I will help you to choosing a perfect song to play<break time='600ms'/>Tell me<break time='200ms'/>what category do you want to play</speak>",
+    speech: "<speak><s>Hello</s><break time='400ms'/>I will help you to choose a perfect song to play<break time='600ms'/>Tell me<break time='200ms'/>what category do you want to play</speak>",
     text: "Hello, I'm your assistant to help you choosing song to play. Just tell me what category do you want to play.",
   }));
   conv.ask(new Suggestions(['Cancel', 'POPS & ANIME', 'niconico & VOCALOID', 'TOUHOU Project','SEGA','GAME & VARIETY','ORIGINAL & JOYPOLIS']));
@@ -110,38 +116,47 @@ app.intent('end', (conv) => {
 });
 
 function showCard(detail,conv) {
-  console.log('\x1b[33minfo:\x1b[0m '+ detail[0].name_en);
-  var cards = [];
-  var is_regionlocked=null;
-  for(var i = 0; i < detail.length; i++) {
-    if(detail[i].regionlocked==1) {
-      is_regionlocked=1;
+  var hasScreen = conv.surface.capabilities.has('actions.capability.SCREEN_OUTPUT');
+  if (hasScreen) {
+    var cards = [];
+    var is_regionlocked=null;
+    for(var i = 0; i < detail.length; i++) {
+      if(detail[i].regionlocked==1) {
+        is_regionlocked=1;
+      }
+      cards.push(new BrowseCarouselItem({
+        title: detail[i].name_en,
+        url: detail[i].listen_youtube,
+        image: new Image({
+          url: detail[i].image_url,
+          alt: 'Image',
+        }),
+        description: 'Author: '+detail[i].artist_en+' | Introduced on: '+detail[i].version,
+      }));
     }
-    cards.push(new BrowseCarouselItem({
-      title: detail[i].name_en,
-      url: detail[i].listen_youtube,
-      image: new Image({
-        url: detail[i].image_url,
-        alt: 'Image',
-      }),
-      description: 'Author: '+detail[i].artist_en+' | Introduced on: '+detail[i].version,
+    var action_rlock_text,action_rlock_speech;
+    if(is_regionlocked==1) {
+      action_rlock_text=" Some of them are region locked.";
+      action_rlock_speech="<break time='300ms'/>Some of them are region locked.";
+    }
+    else {
+      action_rlock_text="";
+      action_rlock_speech="";
+    }
+    conv.ask(new SimpleResponse({
+      speech: '<speak>Here are the results.'+action_rlock_speech+'</speak>',
+      text: "Here're the results."+action_rlock_text,
     }));
+    conv.ask(new BrowseCarousel({items: cards}));
+    conv.ask(new Suggestions(['Cancel', 'POPS & ANIME', 'niconico & VOCALOID', 'TOUHOU Project','SEGA','GAME & VARIETY','ORIGINAL & JOYPOLIS']));
+  } else {
+    let speak = "<speak><p>";
+    for(var i = 0; i < detail.length; i++) {
+      ssml += '<s><say-as interpret-as="ordinal">' + (i+1) + '</say-as>.<break time="600ms"/>' + detail[i].name_en + '.</s><break time="500s"/>';
+    }
+    speak += "<s>Which category do you want to random again?</s></p></speak>";
+    conv.ask(speak);
   }
-  var action_rlock_text,action_rlock_speech;
-  if(is_regionlocked==1) {
-    action_rlock_text="Some of them are region locked.";
-    action_rlock_speech="<break time='300ms'/>Some of them are region locked.";
-  }
-  else {
-    action_rlock_text="";
-    action_rlock_speech="";
-  }
-  conv.ask(new SimpleResponse({
-    speech: '<speak>Here are the results.'+action_rlock_speech+'</speak>',
-    text: "Here're the results."+action_rlock_text,
-  }));
-  conv.ask(new BrowseCarousel({items: cards}));
-  conv.ask(new Suggestions(['Cancel', 'POPS & ANIME', 'niconico & VOCALOID', 'TOUHOU Project','SEGA','GAME & VARIETY','ORIGINAL & JOYPOLIS']));
   return;
 }
 
