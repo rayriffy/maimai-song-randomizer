@@ -19,7 +19,7 @@ app.intent('random-niconico', (conv) => {
     json: true 
   };
   return rp(options)
-        .then(detail => showCard(detail, conv))
+        .then(detail => showCardorSpeak(detail, conv))
         .then(p => Promise.all(p))
         .catch(p => console.log('\x1b[31merror:\x1b[0m '+ p));
 
@@ -34,7 +34,7 @@ app.intent('random-anime', (conv) => {
     json: true 
   };
   return rp(options)
-        .then(detail => showCard(detail, conv))
+        .then(detail => showCardorSpeak(detail, conv))
         .then(p => Promise.all(p))
         .catch(p => console.log('\x1b[31merror:\x1b[0m '+ p));
 
@@ -49,7 +49,7 @@ app.intent('random-original', (conv) => {
     json: true 
   };
   return rp(options)
-        .then(detail => showCard(detail, conv))
+        .then(detail => showCardorSpeak(detail, conv))
         .then(p => Promise.all(p))
         .catch(p => console.log('\x1b[31merror:\x1b[0m '+ p));
 
@@ -64,7 +64,7 @@ app.intent('random-sega', (conv) => {
     json: true 
   };
   return rp(options)
-        .then(detail => showCard(detail, conv))
+        .then(detail => showCardorSpeak(detail, conv))
         .then(p => Promise.all(p))
         .catch(p => console.log('\x1b[31merror:\x1b[0m '+ p));
 
@@ -79,7 +79,7 @@ app.intent('random-game', (conv) => {
     json: true 
   };
   return rp(options)
-        .then(detail => showCard(detail, conv))
+        .then(detail => showCardorSpeak(detail, conv))
         .then(p => Promise.all(p))
         .catch(err => console.log('\x1b[31merror:\x1b[0m '+ err));
 
@@ -94,7 +94,7 @@ app.intent('random-touhou', (conv) => {
     json: true 
   };
   return rp(options)
-        .then(detail => showCard(detail, conv))
+        .then(detail => showCardorSpeak(detail, conv))
         .then(p => Promise.all(p))
         .catch(p => console.log('\x1b[31merror:\x1b[0m '+ p));
 
@@ -115,7 +115,7 @@ app.intent('end', (conv) => {
   }));
 });
 
-function showCard(detail,conv) {
+function showCardorSpeak(detail,conv) {
   var hasScreen = conv.surface.capabilities.has('actions.capability.SCREEN_OUTPUT');
   if (hasScreen) {
     var cards = [];
