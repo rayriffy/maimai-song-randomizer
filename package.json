@@ -9,6 +9,7 @@
     "actions-on-google": "^2.0.0-alpha.4",
     "body-parser": "^1.18.3",
     "express": "^4.16.3",
+    "i18n": "^0.8.3",
     "pm2": "^2.10.4",
     "request": "2.85.0",
     "request-promise": "^4.2.2",
