@@ -6,8 +6,20 @@ const request = require('request')
 const bodyParser = require('body-parser');
 const express = require('express');
 const rp = require('request-promise');
+const i18n = require('i18n');
+
+i18n.configure({
+  locales: ['en-US', 'ja-JP'],
+  directory: __dirname + '/locales',
+  defaultLocale: 'en-US'
+});
 
 const app = dialogflow({debug: false});
+
+app.middleware((conv) => {
+  i18n.setLocale(conv.user.locale);
+});
+
 
 app.intent('random-niconico', (conv) => {
   console.log('\x1b[33minfo:\x1b[0m Hit niconico & VOCALOID intent');
@@ -102,16 +114,16 @@ app.intent('random-touhou', (conv) => {
 app.intent('Welcome', (conv) => {
   console.log('\x1b[33minfo:\x1b[0m Hit welcome intent');
   conv.ask(new SimpleResponse({
-    speech: "<speak><s>Hello</s><break time='400ms'/><s>I will help you to choose a perfect song to play<break time='600ms'/>Tell me<break time='200ms'/>what category do you want to play</s></speak>",
-    text: "Hello, I'm your assistant to help you choosing song to play. Just tell me what category do you want to play.",
+    speech: i18n.__('WELCOME_SSML'),
+    text: i18n.__('WELCOME_TEXT'),
   }));
-  conv.ask(new Suggestions(['Cancel', 'POPS & ANIME', 'niconico & VOCALOID', 'TOUHOU Project','SEGA','GAME & VARIETY','ORIGINAL & JOYPOLIS']));
+  conv.ask(new Suggestions([i18n.__('SUGGESTION_CARD_CANCEL'), i18n.__('SUGGESTION_CARD_POPS'), i18n.__('SUGGESTION_CARD_NICO'), i18n.__('SUGGESTION_CARD_TOHO'), i18n.__('SUGGESTION_CARD_SEGA'), i18n.__('SUGGESTION_CARD_GAME'), i18n.__('SUGGESTION_CARD_ORIG')]));
 });
 app.intent('end', (conv) => {
   console.log('\x1b[33minfo:\x1b[0m Hit end intent');
   conv.close(new SimpleResponse({
-    speech: "<speak><s>Okay!</s><break time='150ms' /><s>I hope you can find a good song to play there.</s><break time='300ms' /><s>Happy gaming!</s></speak>",
-    text: "Okay! I hope you can find a good song to play there... Happy gaming!",
+    speech: i18n.__('END_SSML'),
+    text: i18n.__('END_TEXT'),
   }));
 });
 
@@ -124,37 +136,49 @@ function showCardorSpeak(detail,conv) {
       if(detail[i].regionlocked==1) {
         is_regionlocked=1;
       }
+      if(conv.user.locale=="en-US") {
+        detail[i].name = detail[i].name_en;
+        detail[i].artist = detail[i].artist_en;
+      } else {
+        detail[i].name = detail[i].name_jp;
+        detail[i].artist = detail[i].artist_jp;
+      }
       cards.push(new BrowseCarouselItem({
-        title: detail[i].name_en,
+        title: detail[i].name,
         url: detail[i].listen_youtube,
         image: new Image({
           url: detail[i].image_url,
           alt: 'Image',
         }),
-        description: 'Author: '+detail[i].artist_en+' | Introduced on: '+detail[i].version,
+        description: i18n.__('RESULT_CARD_AUTHOR')+': '+detail[i].artist+' | '+i18n.__('RESULT_CARD_INTRODUCED')+': '+detail[i].version,
       }));
     }
     var action_rlock_text,action_rlock_speech;
     if(is_regionlocked==1) {
-      action_rlock_text=" Some of them are region locked.";
-      action_rlock_speech="<break time='300ms'/>Some of them are region locked.";
+      action_rlock_text = i18n.__('RESULT_TEXT_REGIONLOCKED');
+      action_rlock_speech = i18n.__('RESULT_SPEAK_REGIONLOCKED');
     }
     else {
       action_rlock_text="";
       action_rlock_speech="";
     }
     conv.ask(new SimpleResponse({
-      speech: '<speak>Here are the results.'+action_rlock_speech+'</speak>',
-      text: "Here're the results."+action_rlock_text,
+      speech: '<speak>'+i18n.__('RESULT_SPEAK')+action_rlock_speech+'</speak>',
+      text: i18n.__('RESULT_SPEAK')+action_rlock_text,
     }));
     conv.ask(new BrowseCarousel({items: cards}));
-    conv.ask(new Suggestions(['Cancel', 'POPS & ANIME', 'niconico & VOCALOID', 'TOUHOU Project','SEGA','GAME & VARIETY','ORIGINAL & JOYPOLIS']));
+    conv.ask(new Suggestions([i18n.__('SUGGESTION_CARD_CANCEL'), i18n.__('SUGGESTION_CARD_POPS'), i18n.__('SUGGESTION_CARD_NICO'), i18n.__('SUGGESTION_CARD_TOHO'), i18n.__('SUGGESTION_CARD_SEGA'), i18n.__('SUGGESTION_CARD_GAME'), i18n.__('SUGGESTION_CARD_ORIG')]));
   } else {
     let speak = "<speak><p>";
     for(var i = 0; i < detail.length; i++) {
-      speak += "<s><say-as interpret-as='ordinal'>" + (i+1) + "</say-as>.<break time='600ms'/>" + detail[i].name_en + ".</s><break time='500ms'/>";
+      if(conv.user.locale=="en-US") {
+        detail[i].name = detail[i].name_en;
+      } else {
+        detail[i].name = detail[i].name_jp;
+      }
+      speak += "<s><say-as interpret-as='ordinal'>" + (i+1) + "</say-as>.<break time='600ms'/>" + detail[i].name + ".</s><break time='500ms'/>";
     }
-    speak += "<s>Which category do you want to random again?</s></p></speak>";
+    speak += "<s>"+i18n.__('SPEAKER_SSML')+"</s></p></speak>";
     conv.ask(speak);
   }
   return;
