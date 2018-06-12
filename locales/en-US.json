@@ -15,5 +15,5 @@
   "SUGGESTION_CARD_SEGA" : "SEGA",
   "SUGGESTION_CARD_GAME" : "GAME & VARIETY",
   "SUGGESTION_CARD_ORIG" : "ORIGINAL & JOYPOLIS",
-  "SPEAKER_SSML" : "Which category do you want to random again?"
+  "SPEAKER_SSML" : "Which category do you want to random again? or just say 'Terminate' to end this application"
 }
