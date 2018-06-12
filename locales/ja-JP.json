@@ -4,8 +4,8 @@
   "END_TEXT" : "<speak><s>Okay!</s><break time='150ms' /><s>I hope you can find a good song to play there.</s><break time='300ms' /><s>Happy gaming!</s></speak>",
   "END_SSML" : "Okay! I hope you can find a good song to play there... Happy gaming!",
   "RESULT_SPEAK" : "Here are the results.",
-  "RESULT_SPEAK_REGIONLOCKED" : " Some of them are region locked.",
-  "RESULT_TEXT_REGIONLOCKED" : "<break time='300ms'/>Some of them are region locked.",
+  "RESULT_TEXT_REGIONLOCKED" : " Some of them are region locked.",
+  "RESULT_SPEAK_REGIONLOCKED" : "<break time='300ms'/>Some of them are region locked.",
   "RESULT_CARD_AUTHOR" : "Author",
   "RESULT_CARD_INTRODUCED" : "Indroduced on",
   "SUGGESTION_CARD_CANCEL" : "Cancel",
@@ -16,5 +16,4 @@
   "SUGGESTION_CARD_GAME" : "GAME & VARIETY",
   "SUGGESTION_CARD_ORIG" : "ORIGINAL & JOYPOLIS",
   "SPEAKER_SSML" : "Which category do you want to random again?"
-  
 }
