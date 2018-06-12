@@ -102,7 +102,7 @@ app.intent('random-touhou', (conv) => {
 app.intent('Welcome', (conv) => {
   console.log('\x1b[33minfo:\x1b[0m Hit welcome intent');
   conv.ask(new SimpleResponse({
-    speech: "<speak><s>Hello</s><break time='400ms'/>I will help you to choose a perfect song to play<break time='600ms'/>Tell me<break time='200ms'/>what category do you want to play</speak>",
+    speech: "<speak><s>Hello</s><break time='400ms'/><s>I will help you to choose a perfect song to play<break time='600ms'/>Tell me<break time='200ms'/>what category do you want to play</s></speak>",
     text: "Hello, I'm your assistant to help you choosing song to play. Just tell me what category do you want to play.",
   }));
   conv.ask(new Suggestions(['Cancel', 'POPS & ANIME', 'niconico & VOCALOID', 'TOUHOU Project','SEGA','GAME & VARIETY','ORIGINAL & JOYPOLIS']));
@@ -152,7 +152,7 @@ function showCardorSpeak(detail,conv) {
   } else {
     let speak = "<speak><p>";
     for(var i = 0; i < detail.length; i++) {
-      ssml += '<s><say-as interpret-as="ordinal">' + (i+1) + '</say-as>.<break time="600ms"/>' + detail[i].name_en + '.</s><break time="500s"/>';
+      speak += "<s><say-as interpret-as='ordinal'>" + (i+1) + "</say-as>.<break time='600ms'/>" + detail[i].name_en + ".</s><break time='500ms'/>";
     }
     speak += "<s>Which category do you want to random again?</s></p></speak>";
     conv.ask(speak);
