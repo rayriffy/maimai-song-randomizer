@@ -5,7 +5,7 @@
   "END_SSML" : "<speak><s>よし!</s><break time='150ms' /><s>やりたい曲が出てきたかな？</s><break time='300ms' /><s>お楽しみください！</s></speak>",
   "RESULT_SPEAK" : "ランダム結果でございます。",
   "RESULT_TEXT_REGIONLOCKED" : "一部の曲は海外でプレイすることができません。",
-  "RESULT_SPEAK_REGIONLOCKED" : "<break time='300ms'/>Some of them are region locked.",
+  "RESULT_SPEAK_REGIONLOCKED" : "<break time='300ms'/>一部の曲は海外でプレイすることができません。",
   "RESULT_CARD_AUTHOR" : "アーティスト",
   "RESULT_CARD_INTRODUCED" : "追加",
   "SUGGESTION_CARD_CANCEL" : "キャンセル",
