@@ -9,6 +9,12 @@
       "web": "https://rayriffy.com"
     }
   ],
+  "contributors": [
+    {
+      "name": "Luna@ARC a.k.a. Yuugen",
+      "web": "https://github.com/AphoticL"
+    }
+  ],
   "private": true,
   "license": "MIT",
   "dependencies": {
