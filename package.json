@@ -1,10 +1,16 @@
 {
-  "name": "maimai-bot",
-  "description": "maimaibot-randomizer",
-  "version": "0.1.0",
+  "name": "maimai-song-randomizer",
+  "description": "Google Assistant bot",
+  "version": "1.0.0",
+  "maintainers": [
+    {
+      "name": "Phumrapee Limpianchop",
+      "email": "rayriffy@gmail.com",
+      "web": "https://rayriffy.com"
+    }
+  ],
   "private": true,
-  "license": "Apache Version 2.0",
-  "author": "RiffyTech",
+  "license": "MIT",
   "dependencies": {
     "actions-on-google": "^2.0.0-alpha.4",
     "body-parser": "^1.18.3",
