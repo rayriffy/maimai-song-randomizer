@@ -1,19 +1,19 @@
 {
-  "WELCOME_TEXT" : "Hello, I'm your assistant to help you choosing song to play. Just tell me what category do you want to play.",
-  "WELCOME_SSML" : "<speak><s>Hello</s><break time='400ms'/><s>I will help you to choose a perfect song to play<break time='600ms'/>Tell me<break time='200ms'/>what category do you want to play</s></speak>",
-  "END_TEXT" : "<speak><s>Okay!</s><break time='150ms' /><s>I hope you can find a good song to play there.</s><break time='300ms' /><s>Happy gaming!</s></speak>",
-  "END_SSML" : "Okay! I hope you can find a good song to play there... Happy gaming!",
-  "RESULT_SPEAK" : "Here are the results.",
-  "RESULT_TEXT_REGIONLOCKED" : " Some of them are region locked.",
+  "WELCOME_TEXT" : "こんにちは！私はプレイしたい曲を選ぶためのアシスタントです。どのカテゴリーでプレイしたいのを教えてくれて、ランダムで曲を選びます！",
+  "WELCOME_SSML" : "<speak><s>こんにちは</s><break time='400ms'/><s>私があなたに一番絶好な曲を選んでくれます<break time='600ms'/>どの<break time='200ms'/>カテゴリーでやりたいのを教えてください。</s></speak>",
+  "END_TEXT" : "<speak><s>よし!</s><break time='150ms' /><s>やりたい曲が出てきたかな？</s><break time='300ms' /><s>お楽しみください！</s></speak>",
+  "END_SSML" : "よし! やりたい曲が出てきたかな？お楽しみください！",
+  "RESULT_SPEAK" : "ランダム結果でございます。",
+  "RESULT_TEXT_REGIONLOCKED" : "一部の曲は海外でプレイすることができません。",
   "RESULT_SPEAK_REGIONLOCKED" : "<break time='300ms'/>Some of them are region locked.",
-  "RESULT_CARD_AUTHOR" : "Author",
-  "RESULT_CARD_INTRODUCED" : "Indroduced on",
-  "SUGGESTION_CARD_CANCEL" : "Cancel",
-  "SUGGESTION_CARD_POPS" : "POPS & ANIME",
-  "SUGGESTION_CARD_NICO" : "niconico & VOCALOID",
-  "SUGGESTION_CARD_TOHO" : "TOUHOU Project",
-  "SUGGESTION_CARD_SEGA" : "SEGA",
-  "SUGGESTION_CARD_GAME" : "GAME & VARIETY",
-  "SUGGESTION_CARD_ORIG" : "ORIGINAL & JOYPOLIS",
-  "SPEAKER_SSML" : "Which category do you want to random again?"
+  "RESULT_CARD_AUTHOR" : "アーティスト",
+  "RESULT_CARD_INTRODUCED" : "追加",
+  "SUGGESTION_CARD_CANCEL" : "キャンセル",
+  "SUGGESTION_CARD_POPS" : "POPS＆アニメ",
+  "SUGGESTION_CARD_NICO" : "niconico＆ボーカロイド",
+  "SUGGESTION_CARD_TOHO" : "東方Project
+  "SUGGESTION_CARD_SEGA" : "SEGA"
+  "SUGGESTION_CARD_GAME" : "ゲーム＆バラエティ",
+  "SUGGESTION_CARD_ORIG" : "オリジナル＆ジョイポリス",
+  "SPEAKER_SSML" : "どのカテゴリーでプレイしたいのですか？"
 }
