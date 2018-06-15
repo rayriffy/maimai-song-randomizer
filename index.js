@@ -154,7 +154,7 @@ function showCardorSpeak(detail,conv) {
       }));
     }
     var action_rlock_text,action_rlock_speech;
-    if(is_regionlocked==1) {
+    if(is_regionlocked==1 && conv.user.locale!="ja-JP") {
       action_rlock_text = i18n.__('RESULT_TEXT_REGIONLOCKED');
       action_rlock_speech = i18n.__('RESULT_SPEAK_REGIONLOCKED');
     }
@@ -176,7 +176,7 @@ function showCardorSpeak(detail,conv) {
       } else {
         detail[i].name = detail[i].name_jp;
       }
-      speak += "<s><say-as interpret-as='ordinal'>" + (i+1) + "</say-as>.<break time='600ms'/>" + detail[i].name + ".</s><break time='500ms'/>";
+      speak += "<s><say-as interpret-as='ordinal'>" + (i+1) + "</say-as>.<break time='600ms'/>" + detail[i].name_jp + ".</s><break time='500ms'/>";
     }
     speak += "<s>"+i18n.__('SPEAKER_SSML')+"</s></p></speak>";
     conv.ask(speak);
