@@ -1,7 +1,13 @@
 {
   "name": "maimai-song-randomizer",
   "description": "Google Assistant bot",
-  "version": "1.0.0",
+  "version": "1.1.0",
+  "author": "Phumrapee Limpianchop",
+  "keywords": [
+    "maimai",
+    "google-assistant",
+    "actions-on-google"
+  ],
   "maintainers": [
     {
       "name": "Phumrapee Limpianchop",
@@ -15,8 +21,21 @@
       "web": "https://github.com/AphoticL"
     }
   ],
+  "bugs": {
+    "web": "https://github.com/rayriffy/maimai-song-randomizer/issues",
+    "mail": "support@rayriffy.com"
+  },
+  "engines" : {
+    "node" : ">=6.14.2"
+  },
   "private": true,
   "license": "MIT",
+  "repositories": [
+    {
+      "type": "git",
+      "url": "https://github.com/rayriffy/maimai-song-randomizer.git"
+    }
+  ],
   "dependencies": {
     "actions-on-google": "^2.0.0-alpha.4",
     "body-parser": "^1.18.3",
@@ -26,5 +45,6 @@
     "request": "2.85.0",
     "request-promise": "^4.2.2",
     "time-ago": "^0.2.1"
-  }
+  },
+  "homepage": "https://assistant.google.com/services/a/uid/00000072b48cd3d6?hl=en"
 }
