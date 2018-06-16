@@ -33,11 +33,15 @@ $ git clone https://github.com/ppy/osu-web.git
 ```
 $ npm install
 ```
+
+### (Optional) Configuration
+You can config your application by editing `config` variable in [index.js](https://github.com/rayriffy/maimai-song-randomizer/blob/master/index.js#L19)
+
 ### Start express server
 ```
 $ node index.js
 ```
-Your webhook will running on port **3000**
+Your webhook will running on port **3000** by default
 
 Licence
 -------

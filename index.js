@@ -17,8 +17,8 @@ const i18n = require('i18n');
  */ 
 
 const config = {
-  local: true
-
+  local: true,
+  port: 3000
 };
 
 /**
@@ -209,4 +209,4 @@ function showCardorSpeak(detail,conv) {
   return;
 }
 
-express().use(bodyParser.json(), app).listen(3000);
+express().use(bodyParser.json(), app).listen(config.port);
