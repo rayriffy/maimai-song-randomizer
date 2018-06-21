@@ -11,6 +11,7 @@ const bodyParser = require('body-parser');
 const express = require('express');
 const rp = require('request-promise');
 const i18n = require('i18n');
+const romaji = require("romaji");
 
 /**
  *  CONFIGURATION
@@ -197,11 +198,11 @@ function showCardorSpeak(detail,conv) {
     let speak = "<speak><p>";
     for(var i = 0; i < detail.length; i++) {
       if(conv.user.locale == 'en-US') {
-        detail[i].name = detail[i].name_en;
+        detail[i].name = romaji.fromKana(detail[i].name_jp);
       } else {
         detail[i].name = detail[i].name_jp;
       }
-      speak += "<s><say-as interpret-as='ordinal'>" + (i+1) + "</say-as>.<break time='600ms'/>" + detail[i].name_jp + ".</s><break time='500ms'/>";
+      speak += "<s><say-as interpret-as='ordinal'>" + (i+1) + "</say-as>.<break time='600ms'/>" + detail[i].name + ".</s><break time='500ms'/>";
     }
     speak += "<s>"+i18n.__('SPEAKER_SSML')+"</s></p></speak>";
     conv.ask(speak);
