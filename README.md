@@ -26,7 +26,7 @@ Installing
 
 ### Clone the git repository
 ```
-$ git clone https://github.com/ppy/osu-web.git
+$ git clone https://github.com/rayriffy/maimai-song-randomizer.git
 ```
 
 ### Install Package
