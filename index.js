@@ -11,7 +11,7 @@ const bodyParser = require('body-parser');
 const express = require('express');
 const rp = require('request-promise');
 const i18n = require('i18n');
-const romaji = require("romaji");
+const wanakana = require('wanakana');
 
 /**
  *  CONFIGURATION
@@ -23,7 +23,7 @@ const config = {
 };
 
 /**
- *  PROCESS
+ *  DEFINE ENDPOINT
  */
 
 var endpoint;
@@ -34,11 +34,19 @@ if(config.local) {
   endpoint = 'https://maimaibot.rayriffy.com';
 }
 
+/**
+ *  SET LANGUAGE
+ */
+
 i18n.configure({
   locales: ['en-US', 'ja-JP'],
   directory: __dirname + '/locales',
   defaultLocale: 'en-US'
 });
+
+/**
+ *  APPLICATION PROCESS
+ */
 
 const app = dialogflow({debug: false});
 
@@ -198,7 +206,7 @@ function showCardorSpeak(detail,conv) {
     let speak = "<speak><p>";
     for(var i = 0; i < detail.length; i++) {
       if(conv.user.locale == 'en-US') {
-        detail[i].name = romaji.fromKana(detail[i].name_jp);
+        detail[i].name = wanakana.toRomaji(detail[i].name_jp);
       } else {
         detail[i].name = detail[i].name_jp;
       }
