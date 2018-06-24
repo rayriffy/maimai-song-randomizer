@@ -54,7 +54,6 @@ app.middleware((conv) => {
   i18n.setLocale(conv.user.locale);
 });
 
-
 app.intent('random-niconico', (conv) => {
   console.log('\x1b[33minfo:\x1b[0m Hit niconico & VOCALOID intent');
   var options = {
@@ -68,8 +67,8 @@ app.intent('random-niconico', (conv) => {
         .then(detail => showCardorSpeak(detail, conv))
         .then(p => Promise.all(p))
         .catch(p => console.log('\x1b[31merror:\x1b[0m '+ p));
-
 });
+
 app.intent('random-anime', (conv) => {
   console.log('\x1b[33minfo:\x1b[0m Hit POPS & ANIME intent');
   var options = {
@@ -83,8 +82,8 @@ app.intent('random-anime', (conv) => {
         .then(detail => showCardorSpeak(detail, conv))
         .then(p => Promise.all(p))
         .catch(p => console.log('\x1b[31merror:\x1b[0m '+ p));
-
 });
+
 app.intent('random-original', (conv) => {
   console.log('\x1b[33minfo:\x1b[0m Hit ORIGINAL & JOYPOLIS intent');
   var options = {
@@ -98,8 +97,8 @@ app.intent('random-original', (conv) => {
         .then(detail => showCardorSpeak(detail, conv))
         .then(p => Promise.all(p))
         .catch(p => console.log('\x1b[31merror:\x1b[0m '+ p));
-
 });
+
 app.intent('random-sega', (conv) => {
   console.log('\x1b[33minfo:\x1b[0m Hit SEGA intent');
   var options = {
@@ -113,8 +112,8 @@ app.intent('random-sega', (conv) => {
         .then(detail => showCardorSpeak(detail, conv))
         .then(p => Promise.all(p))
         .catch(p => console.log('\x1b[31merror:\x1b[0m '+ p));
-
 });
+
 app.intent('random-game', (conv) => {
   console.log('\x1b[33minfo:\x1b[0m Hit GAMES & VARIETY intent');
   var options = {
@@ -128,8 +127,8 @@ app.intent('random-game', (conv) => {
         .then(detail => showCardorSpeak(detail, conv))
         .then(p => Promise.all(p))
         .catch(err => console.log('\x1b[31merror:\x1b[0m '+ err));
-
 });
+
 app.intent('random-touhou', (conv) => {
   console.log('\x1b[33minfo:\x1b[0m Hit TOUHOU Project intent');
   var options = {
@@ -143,8 +142,8 @@ app.intent('random-touhou', (conv) => {
         .then(detail => showCardorSpeak(detail, conv))
         .then(p => Promise.all(p))
         .catch(p => console.log('\x1b[31merror:\x1b[0m '+ p));
-
 });
+
 app.intent('Welcome', (conv) => {
   console.log('\x1b[33minfo:\x1b[0m Hit welcome intent');
   conv.ask(new SimpleResponse({
@@ -153,6 +152,7 @@ app.intent('Welcome', (conv) => {
   }));
   conv.ask(new Suggestions([i18n.__('SUGGESTION_CARD_CANCEL'), i18n.__('SUGGESTION_CARD_POPS'), i18n.__('SUGGESTION_CARD_NICO'), i18n.__('SUGGESTION_CARD_TOHO'), i18n.__('SUGGESTION_CARD_SEGA'), i18n.__('SUGGESTION_CARD_GAME'), i18n.__('SUGGESTION_CARD_ORIG')]));
 });
+
 app.intent('end', (conv) => {
   console.log('\x1b[33minfo:\x1b[0m Hit end intent');
   conv.close(new SimpleResponse({
