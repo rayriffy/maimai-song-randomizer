@@ -3,9 +3,10 @@ maimai Song Randomizer
 
 [![Assistant Badge](https://developers.google.com/actions/images/badges/XPM_BADGING_GoogleAssistant_HOR.png)](https://l.rayriffy.com/gassistant)
 
-![forthebadge](https://forthebadge.com/images/badges/powered-by-electricity.svg)
-![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)
-![forthebadge](https://forthebadge.com/images/badges/made-with-javascript.svg)
+![badge](https://forthebadge.com/images/badges/powered-by-electricity.svg)
+![badge](https://forthebadge.com/images/badges/built-with-love.svg)
+![badge](https://forthebadge.com/images/badges/made-with-javascript.svg)
+![badge](https://img.shields.io/github/tag/rayriffy/maimai-song-randomizer.svg?&style=for-the-badge)
 
 **maimai Song Randomizer** is a open source bot on [Google Assistant](https://assistant.google.com). It helps you random 5 songs at the same time on your prefered category while you waiting in line to play *maimai* .
 
