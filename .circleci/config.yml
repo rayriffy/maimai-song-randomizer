@@ -14,13 +14,13 @@ jobs:
           command: |
             apk update
       - run:
-          name: Install required packages
-          command: |
-            yarn add jslint
-      - run:
           name: Install JavaScript packages
           command: |
             yarn
+      - run:
+          name: Install JSLint
+          command: |
+            yarn global add jslint
       - run:
           name: Lint
           command: |
