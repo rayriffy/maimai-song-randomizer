@@ -24,7 +24,7 @@ jobs:
       - run:
           name: Lint
           command: |
-            jslint index.js
+            jslint --edition=latest index.js
   deploy:
     machine:
         enabled: true

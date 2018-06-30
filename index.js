@@ -1,10 +1,13 @@
+/*jslint es6 */
+
 'use strict';
 
 /**
  *  GET NECESSARY LIBRARY
  */
 
-const { dialogflow, Image, Suggestions, LinkOutSuggestion, BrowseCarousel, BrowseCarouselItem, SimpleResponse } = require('actions-on-google');
+const { dialogflow } = require('actions-on-google');
+const { Image, Suggestions, LinkOutSuggestion, BrowseCarousel, BrowseCarouselItem, SimpleResponse } = require('actions-on-google');
 const request = require('request')
 const bodyParser = require('body-parser');
 const express = require('express');
