@@ -1,5 +1,3 @@
-/*jslint es6 */
-
 'use strict';
 
 /**
@@ -8,7 +6,7 @@
 
 const { dialogflow } = require('actions-on-google');
 const { Image, Suggestions, LinkOutSuggestion, BrowseCarousel, BrowseCarouselItem, SimpleResponse } = require('actions-on-google');
-const request = require('request')
+const request = require('request');
 const bodyParser = require('body-parser');
 const express = require('express');
 const rp = require('request-promise');
@@ -17,7 +15,7 @@ const wanakana = require('wanakana');
 
 /**
  *  CONFIGURATION
- */ 
+ */
 
 const config = {
   local: true,
@@ -63,12 +61,12 @@ app.intent('random-niconico', (conv) => {
     headers: {
         'User-Agent': 'Request-Promise'
     },
-    json: true 
+    json: true
   };
   return rp(options)
-        .then(detail => showCardorSpeak(detail, conv))
-        .then(p => Promise.all(p))
-        .catch(p => console.log('\x1b[31merror:\x1b[0m '+ p));
+        .then((detail) => showCardorSpeak(detail, conv))
+        .then((p) => Promise.all(p))
+        .catch((err) => console.log('\x1b[31merror:\x1b[0m '+ err));
 });
 
 app.intent('random-anime', (conv) => {
@@ -78,12 +76,12 @@ app.intent('random-anime', (conv) => {
     headers: {
         'User-Agent': 'Request-Promise'
     },
-    json: true 
+    json: true
   };
   return rp(options)
-        .then(detail => showCardorSpeak(detail, conv))
-        .then(p => Promise.all(p))
-        .catch(p => console.log('\x1b[31merror:\x1b[0m '+ p));
+        .then((detail) => showCardorSpeak(detail, conv))
+        .then((p) => Promise.all(p))
+        .catch((err) => console.log('\x1b[31merror:\x1b[0m '+ err));
 });
 
 app.intent('random-original', (conv) => {
@@ -93,12 +91,12 @@ app.intent('random-original', (conv) => {
     headers: {
         'User-Agent': 'Request-Promise'
     },
-    json: true 
+    json: true
   };
   return rp(options)
-        .then(detail => showCardorSpeak(detail, conv))
-        .then(p => Promise.all(p))
-        .catch(p => console.log('\x1b[31merror:\x1b[0m '+ p));
+        .then((detail) => showCardorSpeak(detail, conv))
+        .then((p) => Promise.all(p))
+        .catch((err) => console.log('\x1b[31merror:\x1b[0m '+ err));
 });
 
 app.intent('random-sega', (conv) => {
@@ -108,12 +106,12 @@ app.intent('random-sega', (conv) => {
     headers: {
         'User-Agent': 'Request-Promise'
     },
-    json: true 
+    json: true
   };
   return rp(options)
-        .then(detail => showCardorSpeak(detail, conv))
-        .then(p => Promise.all(p))
-        .catch(p => console.log('\x1b[31merror:\x1b[0m '+ p));
+        .then((detail) => showCardorSpeak(detail, conv))
+        .then((p) => Promise.all(p))
+        .catch((err) => console.log('\x1b[31merror:\x1b[0m '+ err));
 });
 
 app.intent('random-game', (conv) => {
@@ -123,12 +121,12 @@ app.intent('random-game', (conv) => {
     headers: {
         'User-Agent': 'Request-Promise'
     },
-    json: true 
+    json: true
   };
   return rp(options)
-        .then(detail => showCardorSpeak(detail, conv))
-        .then(p => Promise.all(p))
-        .catch(err => console.log('\x1b[31merror:\x1b[0m '+ err));
+        .then((detail) => showCardorSpeak(detail, conv))
+        .then((p) => Promise.all(p))
+        .catch((err) => console.log('\x1b[31merror:\x1b[0m '+ err));
 });
 
 app.intent('random-touhou', (conv) => {
@@ -138,12 +136,12 @@ app.intent('random-touhou', (conv) => {
     headers: {
         'User-Agent': 'Request-Promise'
     },
-    json: true 
+    json: true
   };
   return rp(options)
-        .then(detail => showCardorSpeak(detail, conv))
-        .then(p => Promise.all(p))
-        .catch(p => console.log('\x1b[31merror:\x1b[0m '+ p));
+        .then((detail) => showCardorSpeak(detail, conv))
+        .then((p) => Promise.all(p))
+        .catch((err) => console.log('\x1b[31merror:\x1b[0m '+ err));
 });
 
 app.intent('Welcome', (conv) => {
