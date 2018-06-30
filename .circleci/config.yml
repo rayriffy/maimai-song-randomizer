@@ -1,0 +1,50 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/actions
+    docker:
+      - image: rayriffy/yarn:latest
+        environment:
+          DEPLOY_HOST: $DEPLOY_HOST
+          DEPLOY_COMMAND: $DEPLOY_COMMAND
+    steps:
+      - checkout
+      - run:
+          name: Update Alpine
+          command: |
+            apk update
+      - run:
+          name: Install required packages
+          command: |
+            yarn add --save jslint
+      - run:
+          name: Install JavaScript packages
+          command: |
+            yarn
+      - run:
+          name: Lint
+          command: |
+            jslint index.js
+  deploy:
+    machine:
+        enabled: true
+    working_directory: ~/actions
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "c7:29:52:e0:f0:33:ca:91:1b:30:3a:96:1f:34:a7:fd"
+      - run:
+          name: Deploy Server
+          command: |
+            ssh -i ~/.ssh/id_rsa_c72952e0f033ca911b303a961f34a7fd $DEPLOY_HOST '$DEPLOY_COMMAND'
+workflows:
+  version: 2
+  build-and-deploy:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only: release
