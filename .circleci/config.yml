@@ -16,7 +16,7 @@ jobs:
       - run:
           name: Install required packages
           command: |
-            yarn add --save jslint
+            yarn add jslint
       - run:
           name: Install JavaScript packages
           command: |
