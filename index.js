@@ -29,9 +29,9 @@ const config = {
 var endpoint;
 
 if(config.local) {
-  endpoint = 'http://maimaibot.local';
+  endpoint = 'http://maimaibot.local/api';
 } else {
-  endpoint = 'https://maimaibot.rayriffy.com';
+  endpoint = 'https://maimaibot.rayriffy.com/api';
 }
 
 /**
@@ -57,9 +57,13 @@ app.middleware((conv) => {
 app.intent('random-niconico', (conv) => {
   console.log('\x1b[33minfo:\x1b[0m Hit niconico & VOCALOID intent');
   var options = {
-    uri: endpoint + '/nico.json',
+    method: 'POST',
+    uri: endpoint,
     headers: {
         'User-Agent': 'Request-Promise'
+    },
+    body: {
+      req: 'nico'
     },
     json: true
   };
@@ -72,9 +76,13 @@ app.intent('random-niconico', (conv) => {
 app.intent('random-anime', (conv) => {
   console.log('\x1b[33minfo:\x1b[0m Hit POPS & ANIME intent');
   var options = {
-    uri: endpoint + '/pops.json',
+    method: 'POST',
+    uri: endpoint,
     headers: {
         'User-Agent': 'Request-Promise'
+    },
+    body: {
+      req: 'pops'
     },
     json: true
   };
@@ -87,9 +95,13 @@ app.intent('random-anime', (conv) => {
 app.intent('random-original', (conv) => {
   console.log('\x1b[33minfo:\x1b[0m Hit ORIGINAL & JOYPOLIS intent');
   var options = {
-    uri: endpoint + '/orig.json',
+    method: 'POST',
+    uri: endpoint,
     headers: {
         'User-Agent': 'Request-Promise'
+    },
+    body: {
+      req: 'orig'
     },
     json: true
   };
@@ -102,9 +114,13 @@ app.intent('random-original', (conv) => {
 app.intent('random-sega', (conv) => {
   console.log('\x1b[33minfo:\x1b[0m Hit SEGA intent');
   var options = {
-    uri: endpoint + '/sega.json',
+    method: 'POST',
+    uri: endpoint,
     headers: {
         'User-Agent': 'Request-Promise'
+    },
+    body: {
+      req: 'sega'
     },
     json: true
   };
@@ -117,9 +133,13 @@ app.intent('random-sega', (conv) => {
 app.intent('random-game', (conv) => {
   console.log('\x1b[33minfo:\x1b[0m Hit GAMES & VARIETY intent');
   var options = {
-    uri: endpoint + '/game.json',
+    method: 'POST',
+    uri: endpoint,
     headers: {
         'User-Agent': 'Request-Promise'
+    },
+    body: {
+      req: 'game'
     },
     json: true
   };
@@ -132,9 +152,13 @@ app.intent('random-game', (conv) => {
 app.intent('random-touhou', (conv) => {
   console.log('\x1b[33minfo:\x1b[0m Hit TOUHOU Project intent');
   var options = {
-    uri: endpoint + '/toho.json',
+    method: 'POST',
+    uri: endpoint,
     headers: {
         'User-Agent': 'Request-Promise'
+    },
+    body: {
+      req: 'toho'
     },
     json: true
   };
