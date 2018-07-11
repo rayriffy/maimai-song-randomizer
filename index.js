@@ -5,8 +5,7 @@
  */
 
 const { dialogflow } = require('actions-on-google');
-const { Image, Suggestions, LinkOutSuggestion, BrowseCarousel, BrowseCarouselItem, SimpleResponse } = require('actions-on-google');
-const request = require('request');
+const { Image, Suggestions, BrowseCarousel, BrowseCarouselItem, SimpleResponse } = require('actions-on-google');
 const bodyParser = require('body-parser');
 const express = require('express');
 const rp = require('request-promise');
