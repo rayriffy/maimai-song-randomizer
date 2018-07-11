@@ -5,8 +5,7 @@
  */
 
 const { dialogflow } = require('actions-on-google');
-const { Image, Suggestions, LinkOutSuggestion, BrowseCarousel, BrowseCarouselItem, SimpleResponse } = require('actions-on-google');
-const request = require('request');
+const { Image, Suggestions, BrowseCarousel, BrowseCarouselItem, SimpleResponse } = require('actions-on-google');
 const bodyParser = require('body-parser');
 const express = require('express');
 const rp = require('request-promise');
@@ -195,15 +194,15 @@ function showCardorSpeak(detail,conv) {
         is_regionlocked = 1;
       }
       if(conv.user.locale == "en-US") {
-        detail[i].name = detail[i].name_en;
-        detail[i].artist = detail[i].artist_en;
+        detail[i].name = detail[i].name.en;
+        detail[i].artist = detail[i].artist.en;
       } else {
-        detail[i].name = detail[i].name_jp;
-        detail[i].artist = detail[i].artist_jp;
+        detail[i].name = detail[i].name.jp;
+        detail[i].artist = detail[i].artist.jp;
       }
       cards.push(new BrowseCarouselItem({
         title: detail[i].name,
-        url: detail[i].listen_youtube,
+        url: detail[i].listen.youtube,
         image: new Image({
           url: detail[i].image_url,
           alt: 'Image',
@@ -230,9 +229,9 @@ function showCardorSpeak(detail,conv) {
     let speak = "<speak><p>";
     for(var i = 0; i < detail.length; i++) {
       if(conv.user.locale == 'en-US') {
-        detail[i].name = wanakana.toRomaji(detail[i].name_jp);
+        detail[i].name = wanakana.toRomaji(detail[i].name.jp);
       } else {
-        detail[i].name = detail[i].name_jp;
+        detail[i].name = detail[i].name.jp;
       }
       speak += "<s><say-as interpret-as='ordinal'>" + (i+1) + "</say-as>.<break time='600ms'/>" + detail[i].name + ".</s><break time='500ms'/>";
     }
