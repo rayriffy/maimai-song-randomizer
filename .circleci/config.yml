@@ -13,9 +13,14 @@ jobs:
           command: |
             apk update
       - run:
-          name: Install JavaScript packages
+          name: Install Node packages
           command: |
             yarn
+            yarn global add jshint
+      - run:
+          name: Test file
+          command: |
+            jshint index.js
   deploy:
     machine:
         enabled: true

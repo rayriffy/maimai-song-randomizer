@@ -227,13 +227,13 @@ function showCardorSpeak(detail,conv) {
     conv.ask(new Suggestions([i18n.__('SUGGESTION_CARD_CANCEL'), i18n.__('SUGGESTION_CARD_POPS'), i18n.__('SUGGESTION_CARD_NICO'), i18n.__('SUGGESTION_CARD_TOHO'), i18n.__('SUGGESTION_CARD_SEGA'), i18n.__('SUGGESTION_CARD_GAME'), i18n.__('SUGGESTION_CARD_ORIG')]));
   } else {
     let speak = "<speak><p>";
-    for(var i = 0; i < detail.length; i++) {
+    for(var j = 0; j < detail.length; j++) {
       if(conv.user.locale == 'en-US') {
-        detail[i].name = wanakana.toRomaji(detail[i].name.jp);
+        detail[j].name = wanakana.toRomaji(detail[j].name.jp);
       } else {
-        detail[i].name = detail[i].name.jp;
+        detail[j].name = detail[j].name.jp;
       }
-      speak += "<s><say-as interpret-as='ordinal'>" + (i+1) + "</say-as>.<break time='600ms'/>" + detail[i].name + ".</s><break time='500ms'/>";
+      speak += "<s><say-as interpret-as='ordinal'>" + (j+1) + "</say-as>.<break time='600ms'/>" + detail[j].name + ".</s><break time='500ms'/>";
     }
     speak += "<s>"+i18n.__('SPEAKER_SSML')+"</s></p></speak>";
     conv.ask(speak);
