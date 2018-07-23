@@ -4,8 +4,7 @@
  *  GET NECESSARY LIBRARY
  */
 
-const { dialogflow } = require('actions-on-google');
-const { Image, Suggestions, BrowseCarousel, BrowseCarouselItem, SimpleResponse } = require('actions-on-google');
+const { dialogflow, Image, Suggestions, BrowseCarousel, BrowseCarouselItem, SimpleResponse } = require('actions-on-google');
 const bodyParser = require('body-parser');
 const express = require('express');
 const rp = require('request-promise');
@@ -27,7 +26,7 @@ const config = {
 
 var endpoint;
 
-if(config.local) {
+if(config.local === true) {
   endpoint = 'http://maimaibot.local/api';
 } else {
   endpoint = 'https://maimaibot.rayriffy.com/api';
