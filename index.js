@@ -37,7 +37,7 @@ if(config.local === true) {
  */
 
 i18n.configure({
-  locales: ['en-US', 'ja-JP'],
+  locales: ['en-US', 'ja-JP', 'th-TH'],
   directory: `${__dirname}/locales`,
   defaultLocale: 'en-US'
 });
