@@ -1,0 +1,19 @@
+{
+  "WELCOME_TEXT" : "สวัสดี ผมจะมาช่วยสุ่มเพลงเพื่อหาเพลงที่คุณต้องการจะเล่น แค่บอกผมมาเลยว่าคุณต้องการเล่นเพลงหมวดไหน",
+  "WELCOME_SSML" : "<speak><s>สวัสดี</s><break time='400ms'/><s>ผมจะมาช่วยสุ่มเพลงเพื่อหาเพลงที่คุณต้องการจะเล่น<break time='500ms'/>แค่บอกผมมาเลยว่าคุณต้องการเล่นเพลงหมวดไหน</s></speak>",
+  "END_TEXT" : "โอเค! หวังว่าจะได้เพลงที่ชอบไปเล่น... ขอให้สนุก!",
+  "END_SSML" : "<speak><s>โอเค!</s><break time='150ms' /><s>หวังว่าจะได้เพลงที่ชอบไปเล่น</s><break time='300ms' /><s>ขอให้สนุก!</s></speak>",
+  "RESULT_SPEAK" : "นี่คือเพลงที่สุ่มมาได้",
+  "RESULT_TEXT_REGIONLOCKED" : " บางเพลงเป็นเพลงล็อคโซน",
+  "RESULT_SPEAK_REGIONLOCKED" : "<break time='300ms'/>บางเพลงเป็นเพลงล็อคโซน",
+  "RESULT_CARD_AUTHOR" : "ผู้แต่ง",
+  "RESULT_CARD_INTRODUCED" : "เข้ามาในช่วง",
+  "SUGGESTION_CARD_CANCEL" : "ยกเลิก",
+  "SUGGESTION_CARD_POPS" : "POPS & ANIME",
+  "SUGGESTION_CARD_NICO" : "niconico & VOCALOID",
+  "SUGGESTION_CARD_TOHO" : "TOUHOU Project",
+  "SUGGESTION_CARD_SEGA" : "SEGA",
+  "SUGGESTION_CARD_GAME" : "GAME & VARIETY",
+  "SUGGESTION_CARD_ORIG" : "ORIGINAL & JOYPOLIS",
+  "SPEAKER_SSML" : "Which category do you want to random again? or just say 'Terminate' to end this application"
+}

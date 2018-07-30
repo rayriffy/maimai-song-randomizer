@@ -4,12 +4,12 @@
  *  GET NECESSARY LIBRARY
  */
 
-const { dialogflow, Image, Suggestions, BrowseCarousel, BrowseCarouselItem, SimpleResponse } = require('actions-on-google');
-const bodyParser = require('body-parser');
-const express = require('express');
-const rp = require('request-promise');
-const i18n = require('i18n');
-const wanakana = require('wanakana');
+import {dialogflow, Image, Suggestions, BrowseCarousel, BrowseCarouselItem, SimpleResponse} from 'actions-on-google';
+import bodyParser from 'body-parser';
+import express from 'express';
+import rp from 'request-promise';
+import i18n from 'i18n';
+import wanakana from 'wanakana';
 
 /**
  *  CONFIGURATION
@@ -24,7 +24,7 @@ const config = {
  *  DEFINE ENDPOINT
  */
 
-var endpoint;
+let endpoint;
 
 if(config.local === true) {
   endpoint = 'http://maimaibot.local/api';
@@ -37,8 +37,8 @@ if(config.local === true) {
  */
 
 i18n.configure({
-  locales: ['en-US', 'ja-JP'],
-  directory: __dirname + '/locales',
+  locales: ['en-US', 'ja-JP', 'th-TH'],
+  directory: `${__dirname}/locales`,
   defaultLocale: 'en-US'
 });
 
@@ -54,7 +54,7 @@ app.middleware((conv) => {
 
 app.intent('random-niconico', (conv) => {
   console.log('\x1b[33minfo:\x1b[0m Hit niconico & VOCALOID intent');
-  var options = {
+  const options = {
     method: 'POST',
     uri: endpoint,
     headers: {
@@ -68,12 +68,12 @@ app.intent('random-niconico', (conv) => {
   return rp(options)
         .then((detail) => showCardorSpeak(detail, conv))
         .then((p) => Promise.all(p))
-        .catch((err) => console.log('\x1b[31merror:\x1b[0m '+ err));
+        .catch((err) => console.log(`\x1b[31merror:\x1b[0m ${err}`));
 });
 
 app.intent('random-anime', (conv) => {
   console.log('\x1b[33minfo:\x1b[0m Hit POPS & ANIME intent');
-  var options = {
+  const options = {
     method: 'POST',
     uri: endpoint,
     headers: {
@@ -87,12 +87,12 @@ app.intent('random-anime', (conv) => {
   return rp(options)
         .then((detail) => showCardorSpeak(detail, conv))
         .then((p) => Promise.all(p))
-        .catch((err) => console.log('\x1b[31merror:\x1b[0m '+ err));
+        .catch((err) => console.log(`\x1b[31merror:\x1b[0m ${err}`));
 });
 
 app.intent('random-original', (conv) => {
   console.log('\x1b[33minfo:\x1b[0m Hit ORIGINAL & JOYPOLIS intent');
-  var options = {
+  const options = {
     method: 'POST',
     uri: endpoint,
     headers: {
@@ -106,12 +106,12 @@ app.intent('random-original', (conv) => {
   return rp(options)
         .then((detail) => showCardorSpeak(detail, conv))
         .then((p) => Promise.all(p))
-        .catch((err) => console.log('\x1b[31merror:\x1b[0m '+ err));
+        .catch((err) => console.log(`\x1b[31merror:\x1b[0m ${err}`));
 });
 
 app.intent('random-sega', (conv) => {
   console.log('\x1b[33minfo:\x1b[0m Hit SEGA intent');
-  var options = {
+  const options = {
     method: 'POST',
     uri: endpoint,
     headers: {
@@ -125,12 +125,12 @@ app.intent('random-sega', (conv) => {
   return rp(options)
         .then((detail) => showCardorSpeak(detail, conv))
         .then((p) => Promise.all(p))
-        .catch((err) => console.log('\x1b[31merror:\x1b[0m '+ err));
+        .catch((err) => console.log(`\x1b[31merror:\x1b[0m ${err}`));
 });
 
 app.intent('random-game', (conv) => {
   console.log('\x1b[33minfo:\x1b[0m Hit GAMES & VARIETY intent');
-  var options = {
+  const options = {
     method: 'POST',
     uri: endpoint,
     headers: {
@@ -144,12 +144,12 @@ app.intent('random-game', (conv) => {
   return rp(options)
         .then((detail) => showCardorSpeak(detail, conv))
         .then((p) => Promise.all(p))
-        .catch((err) => console.log('\x1b[31merror:\x1b[0m '+ err));
+        .catch((err) => console.log(`\x1b[31merror:\x1b[0m ${err}`));
 });
 
 app.intent('random-touhou', (conv) => {
   console.log('\x1b[33minfo:\x1b[0m Hit TOUHOU Project intent');
-  var options = {
+  const options = {
     method: 'POST',
     uri: endpoint,
     headers: {
@@ -163,7 +163,7 @@ app.intent('random-touhou', (conv) => {
   return rp(options)
         .then((detail) => showCardorSpeak(detail, conv))
         .then((p) => Promise.all(p))
-        .catch((err) => console.log('\x1b[31merror:\x1b[0m '+ err));
+        .catch((err) => console.log(`\x1b[31merror:\x1b[0m ${err}`));
 });
 
 app.intent('Welcome', (conv) => {
@@ -184,11 +184,11 @@ app.intent('end', (conv) => {
 });
 
 function showCardorSpeak(detail,conv) {
-  var hasScreen = conv.surface.capabilities.has('actions.capability.SCREEN_OUTPUT');
+  const hasScreen = conv.surface.capabilities.has('actions.capability.SCREEN_OUTPUT');
   if (hasScreen) {
-    var cards = [];
-    var is_regionlocked=null;
-    for(var i = 0; i < detail.length; i++) {
+    const cards = [];
+    let is_regionlocked=null;
+    for(let i = 0; i < detail.length; i++) {
       if(detail[i].regionlocked == 1) {
         is_regionlocked = 1;
       }
@@ -206,10 +206,11 @@ function showCardorSpeak(detail,conv) {
           url: detail[i].image_url,
           alt: 'Image',
         }),
-        description: i18n.__('RESULT_CARD_AUTHOR') + ': ' + detail[i].artist + ' | ' + i18n.__('RESULT_CARD_INTRODUCED') + ': ' + detail[i].version,
+        description: `${i18n.__('RESULT_CARD_AUTHOR')}: ${detail[i].artist} | ${i18n.__('RESULT_CARD_INTRODUCED')}: ${detail[i].version}`,
       }));
     }
-    var action_rlock_text,action_rlock_speech;
+    let action_rlock_text;
+    let action_rlock_speech;
     if(is_regionlocked == 1 && conv.user.locale != 'ja-JP') {
       action_rlock_text = i18n.__('RESULT_TEXT_REGIONLOCKED');
       action_rlock_speech = i18n.__('RESULT_SPEAK_REGIONLOCKED');
@@ -219,22 +220,22 @@ function showCardorSpeak(detail,conv) {
       action_rlock_speech = "";
     }
     conv.ask(new SimpleResponse({
-      speech: '<speak>' + i18n.__('RESULT_SPEAK') + action_rlock_speech + '</speak>',
+      speech: `<speak>${i18n.__('RESULT_SPEAK')}${action_rlock_speech}</speak>`,
       text: i18n.__('RESULT_SPEAK') + action_rlock_text,
     }));
     conv.ask(new BrowseCarousel({items: cards}));
     conv.ask(new Suggestions([i18n.__('SUGGESTION_CARD_CANCEL'), i18n.__('SUGGESTION_CARD_POPS'), i18n.__('SUGGESTION_CARD_NICO'), i18n.__('SUGGESTION_CARD_TOHO'), i18n.__('SUGGESTION_CARD_SEGA'), i18n.__('SUGGESTION_CARD_GAME'), i18n.__('SUGGESTION_CARD_ORIG')]));
   } else {
     let speak = "<speak><p>";
-    for(var j = 0; j < detail.length; j++) {
+    for(let j = 0; j < detail.length; j++) {
       if(conv.user.locale == 'en-US') {
         detail[j].name = wanakana.toRomaji(detail[j].name.jp);
       } else {
         detail[j].name = detail[j].name.jp;
       }
-      speak += "<s><say-as interpret-as='ordinal'>" + (j+1) + "</say-as>.<break time='600ms'/>" + detail[j].name + ".</s><break time='500ms'/>";
+      speak += `<s><say-as interpret-as='ordinal'>${j+1}</say-as>.<break time='600ms'/>${detail[j].name}.</s><break time='500ms'/>`;
     }
-    speak += "<s>"+i18n.__('SPEAKER_SSML')+"</s></p></speak>";
+    speak += `<s>${i18n.__('SPEAKER_SSML')}</s></p></speak>`;
     conv.ask(speak);
   }
   return;
