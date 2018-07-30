@@ -192,12 +192,12 @@ function showCardorSpeak(detail,conv) {
       if(detail[i].regionlocked == 1) {
         is_regionlocked = 1;
       }
-      if(conv.user.locale == "en-US") {
-        detail[i].name = detail[i].name.en;
-        detail[i].artist = detail[i].artist.en;
-      } else {
+      if(conv.user.locale == "ja-JP") {
         detail[i].name = detail[i].name.jp;
         detail[i].artist = detail[i].artist.jp;
+      } else {
+        detail[i].name = detail[i].name.en;
+        detail[i].artist = detail[i].artist.en;
       }
       cards.push(new BrowseCarouselItem({
         title: detail[i].name,
