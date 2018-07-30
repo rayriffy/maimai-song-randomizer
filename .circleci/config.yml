@@ -20,7 +20,11 @@ jobs:
       - run:
           name: Test file
           command: |
-            jshint index.js
+            yarn test
+      - run:
+          name: Build file
+          command: |
+            yarn build
   deploy:
     machine:
         enabled: true
@@ -32,7 +36,7 @@ jobs:
       - run:
           name: Deploy Server
           command: |
-            ssh -i ~/.ssh/id_rsa_c72952e0f033ca911b303a961f34a7fd $DEPLOY_HOST 'cd ~/production/actions-on-google && pm2 stop 0 && git pull && yarn && pm2 start 0'
+            ssh -i ~/.ssh/id_rsa_c72952e0f033ca911b303a961f34a7fd $DEPLOY_HOST 'cd ~/production/actions-on-google && pm2 stop 0 && git pull && yarn && yarn build && pm2 start 0'
 workflows:
   version: 2
   build-and-deploy:

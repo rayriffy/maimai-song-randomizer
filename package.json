@@ -1,8 +1,15 @@
 {
   "name": "maimai-song-randomizer",
   "description": "Google Assistant bot",
-  "version": "1.1.0",
+  "version": "1.4.0",
   "author": "Phumrapee Limpianchop",
+  "main": "index.js",
+  "scripts": {
+    "test": "jshint index.js",
+    "build": "rimraf dist/ && babel ./ --out-dir dist/ --ignore ./node_modules,./.babelrc,./package.json,./npm-debug.log --copy-files",
+    "start": "yarn run build && node dist/index.js"
+  },
+  "homepage": "https://assistant.google.com/services/a/uid/00000072b48cd3d6?hl=en",
   "keywords": [
     "maimai",
     "google-assistant",
@@ -48,5 +55,9 @@
     "typescript": "^2.9.2",
     "wanakana": "^4.0.1"
   },
-  "homepage": "https://assistant.google.com/services/a/uid/00000072b48cd3d6?hl=en"
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "rimraf": "^2.6.2"
+  }
 }
