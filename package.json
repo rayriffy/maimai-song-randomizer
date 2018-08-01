@@ -1,7 +1,7 @@
 {
   "name": "maimai-song-randomizer",
   "description": "Google Assistant bot",
-  "version": "1.4.0",
+  "version": "1.4.2",
   "author": "Phumrapee Limpianchop",
   "main": "index.js",
   "scripts": {
