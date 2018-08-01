@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  build:
+  test:
     working_directory: ~/actions
     docker:
       - image: rayriffy/yarn:latest
@@ -8,6 +8,10 @@ jobs:
           DEPLOY_HOST: $DEPLOY_HOST
     steps:
       - checkout
+      - restore_cache:
+          keys:
+            - dependencies-{{ checksum "package.json" }}
+            - dependencies-
       - run:
           name: Update Alpine
           command: |
@@ -16,34 +20,67 @@ jobs:
           name: Install Node packages
           command: |
             yarn
-            yarn global add jshint
       - run:
           name: Test file
           command: |
             yarn test
+      - save_cache:
+          key: dependencies-{{ checksum "package.json" }}
+          paths:
+            - node_modules
+  build:
+    machine:
+        enabled: true
+    working_directory: ~/actions
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - dependencies-{{ checksum "package.json" }}
+            - dependencies-
       - run:
           name: Build file
           command: |
             yarn build
+       - save_cache:
+           key: dist-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
+           paths:
+             - dist
   deploy:
     machine:
         enabled: true
     working_directory: ~/actions
     steps:
+      - restore_cache:
+          keys:
+            - dist-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
       - add_ssh_keys:
           fingerprints:
             - "c7:29:52:e0:f0:33:ca:91:1b:30:3a:96:1f:34:a7:fd"
       - run:
-          name: Deploy Server
+          name: Upload
           command: |
-            ssh -i ~/.ssh/id_rsa_c72952e0f033ca911b303a961f34a7fd $DEPLOY_HOST 'cd ~/production/actions-on-google && pm2 stop 0 && git pull && yarn && yarn build && pm2 start 0'
+            scp -r -i ~/.ssh/id_rsa_c72952e0f033ca911b303a961f34a7fd ~/actions/dist $DEPLOY_HOST:~/production/actions-on-google
+      - run:
+          name: Deploy
+          command: |
+            ssh -i ~/.ssh/id_rsa_c72952e0f033ca911b303a961f34a7fd $DEPLOY_HOST 'cd ~/production/actions-on-google && pm2 stop 0 && yarn && pm2 start 0'
 workflows:
   version: 2
   build-and-deploy:
     jobs:
-      - build
+      - test
+      - build:
+          requires:
+            - test
+          filters:
+            branches:
+              only:
+                - master
+                - release
       - deploy:
           requires:
+            - test
             - build
           filters:
             branches:
