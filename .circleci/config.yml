@@ -37,8 +37,13 @@ jobs:
             - dependencies-{{ checksum "package.json" }}
             - dependencies-
       - run:
+          name: Update Alpine
+          command: |
+            apk update
+      - run:
           name: Build file
           command: |
+            yarn
             yarn build
       - save_cache:
           key: dist-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
@@ -54,6 +59,10 @@ jobs:
       - restore_cache:
           keys:
             - dist-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
+      - run:
+          name: Update Alpine
+          command: |
+            apk update
       - add_ssh_keys:
           fingerprints:
             - "c7:29:52:e0:f0:33:ca:91:1b:30:3a:96:1f:34:a7:fd"
