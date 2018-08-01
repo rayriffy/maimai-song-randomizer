@@ -4,8 +4,6 @@ jobs:
     working_directory: ~/actions
     docker:
       - image: rayriffy/yarn:latest
-        environment:
-          DEPLOY_HOST: $DEPLOY_HOST
     steps:
       - checkout
       - restore_cache:
@@ -29,8 +27,8 @@ jobs:
           paths:
             - node_modules
   build:
-    machine:
-        enabled: true
+    docker:
+      - image: rayriffy/yarn:latest
     working_directory: ~/actions
     steps:
       - checkout
@@ -42,13 +40,15 @@ jobs:
           name: Build file
           command: |
             yarn build
-       - save_cache:
-           key: dist-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
-           paths:
-             - dist
+      - save_cache:
+          key: dist-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
+          paths:
+            - dist
   deploy:
-    machine:
-        enabled: true
+    docker:
+      - image: rayriffy/yarn:latest
+        environment:
+          DEPLOY_HOST: $DEPLOY_HOST
     working_directory: ~/actions
     steps:
       - restore_cache:
