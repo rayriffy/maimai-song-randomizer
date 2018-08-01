@@ -1,6 +1,6 @@
 {
-  "WELCOME_TEXT" : "Hello, I'm your assistant to help you choosing song to play. Just tell me what category do you want to play.",
-  "WELCOME_SSML" : "<speak><s>Hello</s><break time='400ms'/><s>I will help you to choose a perfect song to play<break time='600ms'/>Tell me<break time='200ms'/>what category do you want to play</s></speak>",
+  "WELCOME_TEXT" : "Hello, I'm your assistant to help you choose a song to play. Just tell me what category do you want.",
+  "WELCOME_SSML" : "<speak><s>Hello</s><break time='400ms'/><s>I will help you to choose a perfect song to play<break time='600ms'/>Tell me<break time='200ms'/>what category do you want to play?</s></speak>",
   "END_TEXT" : "Okay! I hope you can find a good song to play there... Happy gaming!",
   "END_SSML" : "<speak><s>Okay!</s><break time='150ms' /><s>I hope you can find a good song to play there.</s><break time='300ms' /><s>Happy gaming!</s></speak>",
   "RESULT_SPEAK" : "Here are the results.",
