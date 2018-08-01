@@ -15,12 +15,9 @@ jobs:
           command: |
             apk update
       - run:
-          name: Install Node packages
-          command: |
-            yarn
-      - run:
           name: Test file
           command: |
+            yarn
             yarn test
       - save_cache:
           key: dependencies-{{ checksum "package.json" }}
@@ -69,7 +66,7 @@ jobs:
       - run:
           name: Upload
           command: |
-            scp -r -i ~/.ssh/id_rsa_c72952e0f033ca911b303a961f34a7fd ~/actions/dist $DEPLOY_HOST:~/production/actions-on-google
+            scp -r -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa_c72952e0f033ca911b303a961f34a7fd ~/actions/dist/* $DEPLOY_HOST:~/production/actions-on-google
       - run:
           name: Deploy
           command: |
