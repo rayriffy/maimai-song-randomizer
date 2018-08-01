@@ -2,7 +2,6 @@
 # yarn lockfile v1
 
 
-
 "@pm2/agent@^0.5.11":
   version "0.5.11"
   resolved "https://registry.yarnpkg.com/@pm2/agent/-/agent-0.5.11.tgz#b84460505b37d6d2f802f79354034f5ca61023f5"
@@ -17,7 +16,6 @@
     pm2-axon-rpc "^0.5.0"
     semver "^5.5.0"
     ws "^5.1.0"
-
 
 "@pm2/io@~2.1.0":
   version "2.1.1"
@@ -3144,9 +3142,9 @@ typechecker@~2.0.1:
   version "2.0.8"
   resolved "https://registry.yarnpkg.com/typechecker/-/typechecker-2.0.8.tgz#e83da84bb64c584ccb345838576c40b0337db82e"
 
-typescript@^2.9.2:
-  version "2.9.2"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.9.2.tgz#1cbf61d05d6b96269244eb6a3bce4bd914e0f00c"
+typescript@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.0.1.tgz#43738f29585d3a87575520a4b93ab6026ef11fdb"
 
 ultron@~1.1.0:
   version "1.1.1"
