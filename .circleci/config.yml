@@ -43,6 +43,7 @@ jobs:
       - run:
           name: Build file
           command: |
+            yarn
             yarn build
       - save_cache:
           key: dist-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
