@@ -3506,9 +3506,9 @@ vxx@1.2.2:
     shimmer "^1.0.0"
     uuid "^3.0.1"
 
-wanakana@^4.0.1:
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/wanakana/-/wanakana-4.0.1.tgz#a3ba2a0265e5a42b2ebc2321d0d71e3ed3718edf"
+wanakana@^4.0.2:
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/wanakana/-/wanakana-4.0.2.tgz#a7d60186724a56fd50e6e9c224628c09294901d8"
 
 watchr@~2.4.13:
   version "2.4.13"
