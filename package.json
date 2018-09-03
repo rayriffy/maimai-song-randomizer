@@ -52,7 +52,7 @@
     "request": "2.88.0",
     "request-promise": "^4.2.2",
     "time-ago": "^0.2.1",
-    "typescript": "^3.0.1",
+    "typescript": "^3.0.3",
     "wanakana": "^4.0.2"
   },
   "devDependencies": {
