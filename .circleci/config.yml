@@ -48,9 +48,10 @@ jobs:
             - dist
   deploy:
     docker:
-      - image: rayriffy/yarn:latest
-        environment:
-          DEPLOY_HOST: $DEPLOY_HOST
+      - image: registry.gitlab.com/rayriffy/rayriffy-com/git:latest
+        auth:
+          username: $REGISTRY_USER
+          password: $REGISTRY_PASS
     working_directory: ~/actions
     steps:
       - restore_cache:
@@ -62,15 +63,27 @@ jobs:
             apk update
       - add_ssh_keys:
           fingerprints:
-            - "c7:29:52:e0:f0:33:ca:91:1b:30:3a:96:1f:34:a7:fd"
+            - "7a:64:ff:ff:10:61:8f:f5:22:9a:60:d7:f9:d9:62:93"
       - run:
-          name: Upload
+          name: Get rayriffy-com repo
           command: |
-            scp -r -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa_c72952e0f033ca911b303a961f34a7fd ~/actions/dist/* $DEPLOY_HOST:~/production/actions-on-google
+            git clone git@gitlab.com:rayriffy/rayriffy-com.git
+            cd rayriffy-com/web/data/node
+            mkdir ~/tmp
+            rm -rf maimaibotaog.rayriffy.com
       - run:
-          name: Deploy
+          name: Get Code
           command: |
-            ssh -i ~/.ssh/id_rsa_c72952e0f033ca911b303a961f34a7fd $DEPLOY_HOST 'cd ~/production/actions-on-google && pm2 stop 0 && yarn && pm2 start 0'
+            mv ~/actions/dist rayriffy-com/web/data/node/maimaibotaog.rayriffy.com
+      - run:
+          name: Push
+          command: |
+            cd rayriffy-com/web/data/node/maimaibotaog.rayriffy.com
+            git config --global user.name "Autobot"
+            git config --global user.email bot@rayriffy.com
+            git add .
+            git commit -m "[AUTO] maimaibotaog.rayriffy.com Deploy Triggered"
+            git push origin master
 workflows:
   version: 2
   build-and-deploy:

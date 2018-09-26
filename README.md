@@ -45,6 +45,11 @@ $ node index.js
 ```
 Your webhook will running on port **3000** by default
 
+Contributing
+------------
+
+We are accepting your contribution by open pull request to this repository. If you want to contribute to localization, please see [LOCALIZATION.md](LOCALIZATION.md)
+
 Licence
 -------
 
