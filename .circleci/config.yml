@@ -3,61 +3,49 @@ jobs:
   test:
     working_directory: ~/actions
     docker:
-      - image: rayriffy/yarn:latest
+      - image: circleci/node:8.11.3
     steps:
       - checkout
       - restore_cache:
           keys:
-            - dependencies-{{ checksum "package.json" }}
-            - dependencies-
-      - run:
-          name: Update Alpine
-          command: |
-            apk update
+            - dependencies-2-{{ checksum "package.json" }}
+            - dependencies-2-
       - run:
           name: Test file
           command: |
-            yarn
-            yarn test
+            npm install
+            npm run test
       - save_cache:
-          key: dependencies-{{ checksum "package.json" }}
+          key: dependencies-2-{{ checksum "package.json" }}
           paths:
             - node_modules
   build:
     docker:
-      - image: rayriffy/yarn:latest
+      - image: circleci/node:8.11.3
     working_directory: ~/actions
     steps:
       - checkout
       - restore_cache:
           keys:
-            - dependencies-{{ checksum "package.json" }}
-            - dependencies-
-      - run:
-          name: Update Alpine
-          command: |
-            apk update
+            - dependencies-2-{{ checksum "package.json" }}
+            - dependencies-2-
       - run:
           name: Build file
           command: |
-            yarn
-            yarn build
+            npm install
+            npm run build
       - save_cache:
-          key: dist-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
+          key: dist-2-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
           paths:
             - dist
   deploy:
     docker:
-      - image: circleci/node:7.10
+      - image: circleci/node:8.11.3
     working_directory: ~/actions
     steps:
       - restore_cache:
           keys:
-            - dist-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
-      - run:
-          name: Update Alpine
-          command: |
-            apk update
+            - dist-2-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
       - add_ssh_keys:
           fingerprints:
             - "7a:64:ff:ff:10:61:8f:f5:22:9a:60:d7:f9:d9:62:93"
