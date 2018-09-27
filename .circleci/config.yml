@@ -3,7 +3,7 @@ jobs:
   test:
     working_directory: ~/actions
     docker:
-      - image: circleci/node:7.10
+      - image: circleci/node:8.11.3
     steps:
       - checkout
       - restore_cache:
@@ -21,7 +21,7 @@ jobs:
             - node_modules
   build:
     docker:
-      - image: circleci/node:7.10
+      - image: circleci/node:8.11.3
     working_directory: ~/actions
     steps:
       - checkout
@@ -40,7 +40,7 @@ jobs:
             - dist
   deploy:
     docker:
-      - image: circleci/node:7.10
+      - image: circleci/node:8.11.3
     working_directory: ~/actions
     steps:
       - restore_cache:

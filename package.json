@@ -7,7 +7,7 @@
   "scripts": {
     "test": "./node_modules/.bin/jshint index.js",
     "build": "./node_modules/.bin/rimraf dist/ && ./node_modules/.bin/babel ./ --out-dir dist/ --ignore ./node_modules,./.babelrc,./npm-debug.log --copy-files",
-    "start": "yarn run build && node dist/index.js"
+    "start": "npm run build && node dist/index.js"
   },
   "homepage": "https://assistant.google.com/services/a/uid/00000072b48cd3d6?hl=en",
   "keywords": [
