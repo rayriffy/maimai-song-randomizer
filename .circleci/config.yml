@@ -48,8 +48,8 @@ jobs:
             - dist
   deploy:
     docker:
-      - machine:
-        enabled: true
+      machine:
+        - enabled: true
     working_directory: ~/actions
     steps:
       - restore_cache:
