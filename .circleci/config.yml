@@ -48,10 +48,7 @@ jobs:
             - dist
   deploy:
     docker:
-      - image: registry.gitlab.com/rayriffy/rayriffy-com/git:latest
-        auth:
-          username: $REGISTRY_USER
-          password: $REGISTRY_PASS
+      - image: circleci/node:7.10
     working_directory: ~/actions
     steps:
       - restore_cache:
