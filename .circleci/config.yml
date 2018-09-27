@@ -48,8 +48,7 @@ jobs:
             - dist
   deploy:
     docker:
-      machine:
-        - enabled: true
+      - image: circleci/node:7.10
     working_directory: ~/actions
     steps:
       - restore_cache:
