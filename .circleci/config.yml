@@ -3,49 +3,57 @@ jobs:
   test:
     working_directory: ~/actions
     docker:
-      - image: circleci/node:8.11.3
+      - image: rayriffy/yarn:latest
     steps:
       - checkout
       - restore_cache:
           keys:
-            - dependencies-2-{{ checksum "package.json" }}
-            - dependencies-2-
+            - dependencies-{{ checksum "package.json" }}
+            - dependencies-
+      - run:
+          name: Update Alpine
+          command: |
+            apk update
       - run:
           name: Test file
           command: |
-            npm install
-            npm run test
+            yarn
+            yarn test
       - save_cache:
-          key: dependencies-2-{{ checksum "package.json" }}
+          key: dependencies-{{ checksum "package.json" }}
           paths:
             - node_modules
   build:
     docker:
-      - image: circleci/node:8.11.3
+      - image: rayriffy/yarn:latest
     working_directory: ~/actions
     steps:
       - checkout
       - restore_cache:
           keys:
-            - dependencies-2-{{ checksum "package.json" }}
-            - dependencies-2-
+            - dependencies-{{ checksum "package.json" }}
+            - dependencies-
+      - run:
+          name: Update Alpine
+          command: |
+            apk update
       - run:
           name: Build file
           command: |
-            npm install
-            npm run build
+            yarn
+            yarn build
       - save_cache:
-          key: dist-2-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
+          key: dist-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
           paths:
             - dist
   deploy:
-    docker:
-      - image: circleci/node:8.11.3
+    machine:
+        enabled: true
     working_directory: ~/actions
     steps:
       - restore_cache:
           keys:
-            - dist-2-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
+            - dist-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
       - add_ssh_keys:
           fingerprints:
             - "7a:64:ff:ff:10:61:8f:f5:22:9a:60:d7:f9:d9:62:93"
