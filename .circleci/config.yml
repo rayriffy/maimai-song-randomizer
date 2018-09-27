@@ -14,7 +14,7 @@ jobs:
           name: Test file
           command: |
             npm install
-            npm run install
+            npm run test
       - save_cache:
           key: dependencies-2-{{ checksum "package.json" }}
           paths:
