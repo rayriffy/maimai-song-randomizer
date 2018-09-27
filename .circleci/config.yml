@@ -54,10 +54,6 @@ jobs:
       - restore_cache:
           keys:
             - dist-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
-      - run:
-          name: Update Alpine
-          command: |
-            apk update
       - add_ssh_keys:
           fingerprints:
             - "7a:64:ff:ff:10:61:8f:f5:22:9a:60:d7:f9:d9:62:93"
