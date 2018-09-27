@@ -48,10 +48,8 @@ jobs:
             - dist
   deploy:
     docker:
-      - image: registry.gitlab.com/rayriffy/rayriffy-com/git:latest
-        auth:
-          username: $REGISTRY_USER
-          password: $REGISTRY_PASS
+      machine:
+        enabled: true
     working_directory: ~/actions
     steps:
       - restore_cache:
