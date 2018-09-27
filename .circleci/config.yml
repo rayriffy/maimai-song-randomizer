@@ -3,13 +3,13 @@ jobs:
   test:
     working_directory: ~/actions
     docker:
-      - image: rayriffy/yarn:latest
+      - image: circleci/node:7.10
     steps:
       - checkout
       - restore_cache:
           keys:
-            - dependencies-{{ checksum "package.json" }}
-            - dependencies-
+            - dependencies-2-{{ checksum "package.json" }}
+            - dependencies-2-
       - run:
           name: Update Alpine
           command: |
@@ -17,22 +17,22 @@ jobs:
       - run:
           name: Test file
           command: |
-            yarn
-            yarn test
+            npm install
+            npm run install
       - save_cache:
-          key: dependencies-{{ checksum "package.json" }}
+          key: dependencies-2-{{ checksum "package.json" }}
           paths:
             - node_modules
   build:
     docker:
-      - image: rayriffy/yarn:latest
+      - image: circleci/node:7.10
     working_directory: ~/actions
     steps:
       - checkout
       - restore_cache:
           keys:
-            - dependencies-{{ checksum "package.json" }}
-            - dependencies-
+            - dependencies-2-{{ checksum "package.json" }}
+            - dependencies-2-
       - run:
           name: Update Alpine
           command: |
@@ -40,10 +40,10 @@ jobs:
       - run:
           name: Build file
           command: |
-            yarn
-            yarn build
+            npm install
+            npm run build
       - save_cache:
-          key: dist-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
+          key: dist-2-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
           paths:
             - dist
   deploy:
@@ -53,7 +53,7 @@ jobs:
     steps:
       - restore_cache:
           keys:
-            - dist-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
+            - dist-2-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
       - run:
           name: Update Alpine
           command: |
