@@ -27,7 +27,7 @@ const config = {
 let endpoint;
 
 if(config.local === true) {
-  endpoint = 'http://maimaibot.local/api';
+  endpoint = 'http://web-maimaibot-rayriffy-com/api';
 } else {
   endpoint = 'https://maimaibot.rayriffy.com/api';
 }
