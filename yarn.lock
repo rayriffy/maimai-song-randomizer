@@ -2,6 +2,14 @@
 # yarn lockfile v1
 
 
+"@pm2/agent-node@^1.0.2":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@pm2/agent-node/-/agent-node-1.0.4.tgz#78ba34d9edc06e62c77e92e93eca5bf9d64797f6"
+  dependencies:
+    debug "^3.1.0"
+    eventemitter2 "^5.0.1"
+    ws "^6.0.0"
+
 "@pm2/agent@^0.5.11":
   version "0.5.11"
   resolved "https://registry.yarnpkg.com/@pm2/agent/-/agent-0.5.11.tgz#b84460505b37d6d2f802f79354034f5ca61023f5"
@@ -17,10 +25,11 @@
     semver "^5.5.0"
     ws "^5.1.0"
 
-"@pm2/io@~2.3.11":
-  version "2.3.11"
-  resolved "https://registry.yarnpkg.com/@pm2/io/-/io-2.3.11.tgz#f9b14b8acc9af816dcbeee6c2d027eb89355d8d1"
+"@pm2/io@~2.4.2":
+  version "2.4.3"
+  resolved "https://registry.yarnpkg.com/@pm2/io/-/io-2.4.3.tgz#8a58d46f30a64f3eaec834f1f732d241fe2c7aa2"
   dependencies:
+    "@pm2/agent-node" "^1.0.2"
     async "^2.6.1"
     debug "3.1.0"
     deep-metrics "0.0.2"
@@ -117,9 +126,9 @@ accepts@~1.3.5:
     mime-types "~2.1.18"
     negotiator "0.6.1"
 
-actions-on-google@^2.3.0:
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/actions-on-google/-/actions-on-google-2.3.0.tgz#4da4f104f1af99b08e065811bdb5e9f8ed6db31d"
+actions-on-google@^2.4.0:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/actions-on-google/-/actions-on-google-2.4.0.tgz#80682b9aa5d8d7fb3b8980726ae45458bf7a3276"
   dependencies:
     "@types/aws-lambda" "^0.0.33"
     "@types/debug" "^0.0.30"
@@ -1145,6 +1154,10 @@ dashdash@^1.12.0:
   resolved "https://registry.yarnpkg.com/dashdash/-/dashdash-1.14.1.tgz#853cfa0f7cbe2fed5de20326b8dd581035f6e2f0"
   dependencies:
     assert-plus "^1.0.0"
+
+date-fns@^1.29.0:
+  version "1.29.0"
+  resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-1.29.0.tgz#12e609cdcb935127311d04d33334e2960a2a54e6"
 
 date-now@^0.1.4:
   version "0.1.4"
@@ -2714,12 +2727,12 @@ pm2-multimeter@^0.1.2:
   dependencies:
     charm "~0.1.1"
 
-pm2@^3.1.3:
-  version "3.1.3"
-  resolved "https://registry.yarnpkg.com/pm2/-/pm2-3.1.3.tgz#a9ba247e3b34bab3bc7c6fcdfd04a49955c90874"
+pm2@^3.2.1:
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/pm2/-/pm2-3.2.1.tgz#87453c6ccccf9112b41843372f345103e055e3e0"
   dependencies:
     "@pm2/agent" "^0.5.11"
-    "@pm2/io" "~2.3.11"
+    "@pm2/io" "~2.4.2"
     "@pm2/js-api" "^0.5.15"
     async "^2.6.1"
     blessed "^0.1.81"
@@ -2728,6 +2741,7 @@ pm2@^3.1.3:
     cli-table-redemption "^1.0.0"
     commander "2.15.1"
     cron "^1.3"
+    date-fns "^1.29.0"
     debug "^3.1"
     eventemitter2 "5.0.1"
     fclone "1.0.11"
@@ -3439,9 +3453,9 @@ typedarray@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
 
-typescript@^3.0.3:
-  version "3.0.3"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.0.3.tgz#4853b3e275ecdaa27f78fda46dc273a7eb7fc1c8"
+typescript@^3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.1.1.tgz#3362ba9dd1e482ebb2355b02dfe8bcd19a2c7c96"
 
 ultron@~1.1.0:
   version "1.1.1"
@@ -3605,6 +3619,12 @@ ws@^3.0.0:
 ws@^5.1.0:
   version "5.2.2"
   resolved "https://registry.yarnpkg.com/ws/-/ws-5.2.2.tgz#dffef14866b8e8dc9133582514d1befaf96e980f"
+  dependencies:
+    async-limiter "~1.0.0"
+
+ws@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/ws/-/ws-6.0.0.tgz#eaa494aded00ac4289d455bac8d84c7c651cef35"
   dependencies:
     async-limiter "~1.0.0"
 
