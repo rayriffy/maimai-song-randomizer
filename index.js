@@ -16,7 +16,7 @@ import wanakana from 'wanakana';
  */
 
 const config = {
-  local: true,
+  local: false,
   port: 3000
 };
 
@@ -29,7 +29,7 @@ let endpoint;
 if(config.local === true) {
   endpoint = 'http://web-maimaibot-rayriffy-com/api';
 } else {
-  endpoint = 'https://maimaibot.rayriffy.com/api';
+  endpoint = 'https://maimai-json-api.herokuapp.com/api';
 }
 
 /**
