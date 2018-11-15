@@ -7,7 +7,7 @@
   "scripts": {
     "test": "./node_modules/.bin/jshint index.js",
     "build": "./node_modules/.bin/rimraf dist/ && ./node_modules/.bin/babel ./ --out-dir dist/ --ignore ./node_modules,./.babelrc,./npm-debug.log --copy-files",
-    "start": "yarn run build && node dist/index.js"
+    "start": "npm run build && node dist/index.js"
   },
   "homepage": "https://assistant.google.com/services/a/uid/00000072b48cd3d6?hl=en",
   "keywords": [
@@ -46,7 +46,9 @@
   "dependencies": {
     "actions-on-google": "^2.4.1",
     "body-parser": "^1.18.3",
+    "dotenv": "^6.1.0",
     "express": "^4.16.4",
+    "express-basic-auth": "^1.1.6",
     "i18n": "^0.8.3",
     "pm2": "^3.2.2",
     "request": "2.88.0",

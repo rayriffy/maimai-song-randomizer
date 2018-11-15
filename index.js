@@ -7,18 +7,14 @@
 import {dialogflow, Image, Suggestions, BrowseCarousel, BrowseCarouselItem, SimpleResponse} from 'actions-on-google';
 import bodyParser from 'body-parser';
 import express from 'express';
+import basicAuth from 'express-basic-auth';
 import rp from 'request-promise';
 import i18n from 'i18n';
 import wanakana from 'wanakana';
+import dotenv from 'dotenv';
 
-/**
- *  CONFIGURATION
- */
+dotenv.config();
 
-const config = {
-  local: false,
-  port: 3000
-};
 
 /**
  *  DEFINE ENDPOINT
@@ -26,7 +22,7 @@ const config = {
 
 let endpoint;
 
-if(config.local === true) {
+if(process.env.LOCAL === true) {
   endpoint = 'http://web-maimaibot-rayriffy-com/api';
 } else {
   endpoint = 'https://maimai-json-api.herokuapp.com/api';
@@ -241,4 +237,11 @@ function showCardorSpeak(detail,conv) {
   return;
 }
 
-express().use(bodyParser.json(), app).listen(config.port);
+httppass=process.env.HTTP_PASS;
+
+express()
+  .use(basicAuth({
+    users: { 'actions' : httppass  }
+  }))
+  .use(bodyParser.json(), app)
+  .listen(process.env.PORT);
