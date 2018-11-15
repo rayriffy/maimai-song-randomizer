@@ -237,7 +237,7 @@ function showCardorSpeak(detail,conv) {
   return;
 }
 
-httppass=process.env.HTTP_PASS;
+let httppass=process.env.HTTP_PASS;
 
 express()
   .use(basicAuth({
