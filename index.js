@@ -15,6 +15,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
+require('heroku-self-ping')("https://maimai-actions.herokuapp.com/");
 
 /**
  *  DEFINE ENDPOINT
