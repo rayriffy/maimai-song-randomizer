@@ -12,10 +12,11 @@ import rp from 'request-promise';
 import i18n from 'i18n';
 import wanakana from 'wanakana';
 import dotenv from 'dotenv';
+import selfPing from 'heroku-self-ping';
 
 dotenv.config();
 
-require('heroku-self-ping')("https://maimai-actions.herokuapp.com/");
+selfPing('https://maimai-actions.herokuapp.com/');
 
 /**
  *  DEFINE ENDPOINT
