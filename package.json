@@ -53,7 +53,7 @@
     "i18n": "^0.8.3",
     "pm2": "^3.2.9",
     "request": "2.88.0",
-    "request-promise": "^4.2.2",
+    "request-promise": "^4.2.4",
     "time-ago": "^0.2.1",
     "typescript": "^3.3.3",
     "wanakana": "^4.0.2"
