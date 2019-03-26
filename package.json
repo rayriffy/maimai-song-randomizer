@@ -51,7 +51,7 @@
     "express": "^4.16.4",
     "heroku-self-ping": "^2.0.0",
     "i18n": "^0.8.3",
-    "pm2": "^3.4.0",
+    "pm2": "^3.4.1",
     "request": "2.88.0",
     "request-promise": "^4.2.4",
     "time-ago": "^0.2.1",
