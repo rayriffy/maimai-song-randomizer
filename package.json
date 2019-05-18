@@ -44,7 +44,7 @@
     }
   ],
   "dependencies": {
-    "actions-on-google": "^2.6.0",
+    "actions-on-google": "^2.7.0",
     "basic-auth-connect": "^1.0.0",
     "body-parser": "^1.18.3",
     "dotenv": "^7.0.0",
