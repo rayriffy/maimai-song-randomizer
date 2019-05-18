@@ -47,7 +47,7 @@
     "actions-on-google": "^2.7.0",
     "basic-auth-connect": "^1.0.0",
     "body-parser": "^1.18.3",
-    "dotenv": "^7.0.0",
+    "dotenv": "^8.0.0",
     "express": "^4.17.0",
     "heroku-self-ping": "^2.0.0",
     "i18n": "^0.8.3",
