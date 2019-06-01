@@ -46,37 +46,6 @@ jobs:
           key: dist-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
           paths:
             - dist
-  deploy:
-    machine:
-        enabled: true
-    working_directory: ~/actions
-    steps:
-      - restore_cache:
-          keys:
-            - dist-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
-      - add_ssh_keys:
-          fingerprints:
-            - "7a:64:ff:ff:10:61:8f:f5:22:9a:60:d7:f9:d9:62:93"
-      - run:
-          name: Get rayriffy-com repo
-          command: |
-            git clone git@gitlab.com:rayriffy/rayriffy-com.git
-            cd rayriffy-com/web/data/node
-            mkdir ~/tmp
-            rm -rf maimaibotaog.rayriffy.com
-      - run:
-          name: Get Code
-          command: |
-            mv ~/actions/dist rayriffy-com/web/data/node/maimaibotaog.rayriffy.com
-      - run:
-          name: Push
-          command: |
-            cd rayriffy-com/web/data/node/maimaibotaog.rayriffy.com
-            git config --global user.name "Autobot"
-            git config --global user.email bot@rayriffy.com
-            git add .
-            git commit -m "[AUTO] maimaibotaog.rayriffy.com Deploy Triggered"
-            git push origin master
 workflows:
   version: 2
   build-and-deploy:
@@ -90,10 +59,3 @@ workflows:
               only:
                 - master
                 - release
-      - deploy:
-          requires:
-            - test
-            - build
-          filters:
-            branches:
-              only: release
