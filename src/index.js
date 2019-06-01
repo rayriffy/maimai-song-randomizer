@@ -106,6 +106,8 @@ const showCardorSpeak = async (details, conv) => {
 
     conv.ask(speak)
   }
+
+  return true
 }
 
 /**
