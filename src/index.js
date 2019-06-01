@@ -126,7 +126,14 @@ app.intent('random-niconico', async conv => {
   try {
     const res = await getRaw('nico')
 
-    return showCardorSpeak(res.data, conv)
+    return new Promise((resolve, reject) => {
+      try {
+        const m = showCardorSpeak(res.data, conv)
+        resolve(m)
+      } catch (err) {
+        reject(err)
+      }
+    })
   } catch (err) {
     console.log(`\x1b[31merror:\x1b[0m ${err}`)
 
@@ -140,7 +147,14 @@ app.intent('random-anime', async conv => {
   try {
     const res = await getRaw('pops')
 
-    return showCardorSpeak(res.data, conv)
+    return new Promise((resolve, reject) => {
+      try {
+        const m = showCardorSpeak(res.data, conv)
+        resolve(m)
+      } catch (err) {
+        reject(err)
+      }
+    })
   } catch (err) {
     console.log(`\x1b[31merror:\x1b[0m ${err}`)
 
@@ -154,7 +168,14 @@ app.intent('random-original', async conv => {
   try {
     const res = await getRaw('orig')
 
-    return showCardorSpeak(res.data, conv)
+    return new Promise((resolve, reject) => {
+      try {
+        const m = showCardorSpeak(res.data, conv)
+        resolve(m)
+      } catch (err) {
+        reject(err)
+      }
+    })
   } catch (err) {
     console.log(`\x1b[31merror:\x1b[0m ${err}`)
 
@@ -168,7 +189,14 @@ app.intent('random-sega', async conv => {
   try {
     const res = await getRaw('sega')
 
-    return showCardorSpeak(res.data, conv)
+    return new Promise((resolve, reject) => {
+      try {
+        const m = showCardorSpeak(res.data, conv)
+        resolve(m)
+      } catch (err) {
+        reject(err)
+      }
+    })
   } catch (err) {
     console.log(`\x1b[31merror:\x1b[0m ${err}`)
 
@@ -182,7 +210,14 @@ app.intent('random-game', async conv => {
   try {
     const res = await getRaw('game')
 
-    return showCardorSpeak(res.data, conv)
+    return new Promise((resolve, reject) => {
+      try {
+        const m = showCardorSpeak(res.data, conv)
+        resolve(m)
+      } catch (err) {
+        reject(err)
+      }
+    })
   } catch (err) {
     console.log(`\x1b[31merror:\x1b[0m ${err}`)
 
@@ -196,7 +231,14 @@ app.intent('random-touhou', async conv => {
   try {
     const res = await getRaw('toho')
 
-    return showCardorSpeak(res.data, conv)
+    return new Promise((resolve, reject) => {
+      try {
+        const m = showCardorSpeak(res.data, conv)
+        resolve(m)
+      } catch (err) {
+        reject(err)
+      }
+    })
   } catch (err) {
     console.log(`\x1b[31merror:\x1b[0m ${err}`)
 
