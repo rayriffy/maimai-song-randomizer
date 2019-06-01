@@ -10,11 +10,11 @@ import wanakana from 'wanakana'
 
 dotenv.config()
 
-const {LOCAL, HTTP_USER, HTTP_PASS, PORT} = process.env
+const {HTTP_USER, HTTP_PASS, PORT} = process.env
 
 selfPing('https://maimai-actions.herokuapp.com/')
 
-const endpoint = LOCAL ? 'http://web-maimaibot-rayriffy-com/api' : 'https://maimai-json-api.herokuapp.com/api'
+const endpoint = 'https://maimai-json-api.herokuapp.com/api'
 
 /**
  * Set language
