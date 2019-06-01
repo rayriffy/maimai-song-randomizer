@@ -5,9 +5,11 @@
   "author": "Phumrapee Limpianchop",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/.bin/jshint index.js",
-    "build": "./node_modules/.bin/rimraf dist/ && ./node_modules/.bin/babel ./ --out-dir dist/ --ignore ./node_modules,./.babelrc,./npm-debug.log --copy-files",
-    "start": "npm run build && node dist/index.js"
+    "build": "backpack build",
+    "dev": "backpack",
+    "format": "prettier --write --no-semi --list-different './src/**/*.js'",
+    "lint": "eslint ./src/**/*.js",
+    "start": "yarn build && node ./build/main.js"
   },
   "homepage": "https://assistant.google.com/services/a/uid/00000072b48cd3d6?hl=en",
   "keywords": [
@@ -45,20 +47,26 @@
   ],
   "dependencies": {
     "actions-on-google": "^2.7.0",
+    "axios": "^0.19.0",
+    "backpack-core": "^0.8.3",
     "basic-auth-connect": "^1.0.0",
     "body-parser": "^1.19.0",
     "dotenv": "^8.0.0",
     "express": "^4.17.1",
     "heroku-self-ping": "^2.0.0",
     "i18n": "^0.8.3",
-    "request": "2.88.0",
-    "request-promise": "^4.2.4",
     "wanakana": "^4.0.2"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-preset-env": "^1.7.0",
-    "jshint": "^2.10.2",
-    "rimraf": "^2.6.3"
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.16.0",
+    "eslint-config-prettier": "^4.3.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.17.3",
+    "eslint-plugin-node": "^9.1.0",
+    "eslint-plugin-prettier": "^3.1.0",
+    "eslint-plugin-promise": "^4.1.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "prettier": "^1.17.1"
   }
 }
