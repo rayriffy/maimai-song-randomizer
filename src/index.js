@@ -40,7 +40,7 @@ const getRaw = async type => {
   return out
 }
 
-const showCardorSpeak = async (details, conv) => {
+const showCardorSpeak = (details, conv) => {
   const hasScreen = conv.surface.capabilities.has('actions.capability.SCREEN_OUTPUT')
   if (hasScreen) {
     const cards = []
