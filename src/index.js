@@ -41,73 +41,75 @@ const getRaw = async type => {
 }
 
 const showCardorSpeak = (details, conv) => {
-  const hasScreen = conv.surface.capabilities.has('actions.capability.SCREEN_OUTPUT')
-  if (hasScreen) {
-    const cards = []
+  return new Promise((resolve, reject) => {
+    const hasScreen = conv.surface.capabilities.has('actions.capability.SCREEN_OUTPUT')
+    if (hasScreen) {
+      const cards = []
 
-    let isRegionlocked = false
+      let isRegionlocked = false
 
-    // Fetch cards
-    details.map(detail => {
-      if (detail.regionlocked === 1) {
-        isRegionlocked = true
-      }
+      // Fetch cards
+      details.map(detail => {
+        if (detail.regionlocked === 1) {
+          isRegionlocked = true
+        }
 
-      cards.push(
-        new BrowseCarouselItem({
-          title: conv.user.locale === 'ja-JP' ? detail.name.jp : detail.name.en,
-          url: detail.listen.youtube,
-          image: new Image({
-            url: detail.image_url,
-            alt: 'Image',
+        cards.push(
+          new BrowseCarouselItem({
+            title: conv.user.locale === 'ja-JP' ? detail.name.jp : detail.name.en,
+            url: detail.listen.youtube,
+            image: new Image({
+              url: detail.image_url,
+              alt: 'Image',
+            }),
+            description: `${i18n.__('RESULT_CARD_AUTHOR')}: ${
+              conv.user.locale === 'ja-JP' ? detail.artist.jp : detail.artist.en
+            } | ${i18n.__('RESULT_CARD_INTRODUCED')}: ${detail.version}`,
           }),
-          description: `${i18n.__('RESULT_CARD_AUTHOR')}: ${
-            conv.user.locale === 'ja-JP' ? detail.artist.jp : detail.artist.en
-          } | ${i18n.__('RESULT_CARD_INTRODUCED')}: ${detail.version}`,
+        )
+      })
+
+      // Send conversation
+      conv.ask(
+        new SimpleResponse({
+          speech: `<speak>${i18n.__('RESULT_SPEAK')}${
+            isRegionlocked === 1 && conv.user.locale !== 'ja-JP' ? i18n.__('RESULT_SPEAK_REGIONLOCKED') : ''
+          }</speak>`,
+          text:
+            i18n.__('RESULT_SPEAK') +
+            (isRegionlocked === 1 && conv.user.locale !== 'ja-JP' ? i18n.__('RESULT_TEXT_REGIONLOCKED') : ''),
         }),
       )
-    })
-
-    // Send conversation
-    conv.ask(
-      new SimpleResponse({
-        speech: `<speak>${i18n.__('RESULT_SPEAK')}${
-          isRegionlocked === 1 && conv.user.locale !== 'ja-JP' ? i18n.__('RESULT_SPEAK_REGIONLOCKED') : ''
-        }</speak>`,
-        text:
-          i18n.__('RESULT_SPEAK') +
-          (isRegionlocked === 1 && conv.user.locale !== 'ja-JP' ? i18n.__('RESULT_TEXT_REGIONLOCKED') : ''),
-      }),
-    )
-    conv.ask(new BrowseCarousel({items: cards}))
-    conv.ask(
-      new Suggestions([
-        i18n.__('SUGGESTION_CARD_CANCEL'),
-        i18n.__('SUGGESTION_CARD_POPS'),
-        i18n.__('SUGGESTION_CARD_NICO'),
-        i18n.__('SUGGESTION_CARD_TOHO'),
-        i18n.__('SUGGESTION_CARD_SEGA'),
-        i18n.__('SUGGESTION_CARD_GAME'),
-        i18n.__('SUGGESTION_CARD_ORIG'),
-      ]),
-    )
-  } else {
-    let speak = '<speak><p>'
-
-    details.map((detail, i) => {
-      speak.concat(
-        `<s><say-as interpret-as='ordinal'>${i + 1}</say-as>.<break time='600ms'/>${
-          conv.user.locale === 'en-US' ? wanakana.toRomaji(detail.name.jp) : detail.name.jp
-        }.</s><break time='500ms'/>`,
+      conv.ask(new BrowseCarousel({items: cards}))
+      conv.ask(
+        new Suggestions([
+          i18n.__('SUGGESTION_CARD_CANCEL'),
+          i18n.__('SUGGESTION_CARD_POPS'),
+          i18n.__('SUGGESTION_CARD_NICO'),
+          i18n.__('SUGGESTION_CARD_TOHO'),
+          i18n.__('SUGGESTION_CARD_SEGA'),
+          i18n.__('SUGGESTION_CARD_GAME'),
+          i18n.__('SUGGESTION_CARD_ORIG'),
+        ]),
       )
-    })
+    } else {
+      let speak = '<speak><p>'
 
-    speak.concat(`<s>${i18n.__('SPEAKER_SSML')}</s></p></speak>`)
+      details.map((detail, i) => {
+        speak.concat(
+          `<s><say-as interpret-as='ordinal'>${i + 1}</say-as>.<break time='600ms'/>${
+            conv.user.locale === 'en-US' ? wanakana.toRomaji(detail.name.jp) : detail.name.jp
+          }.</s><break time='500ms'/>`,
+        )
+      })
 
-    conv.ask(speak)
-  }
+      speak.concat(`<s>${i18n.__('SPEAKER_SSML')}</s></p></speak>`)
 
-  return true
+      conv.ask(speak)
+    }
+
+    return resolve()
+  })
 }
 
 /**
@@ -125,15 +127,7 @@ app.intent('random-niconico', async conv => {
 
   try {
     const res = await getRaw('nico')
-
-    return new Promise((resolve, reject) => {
-      try {
-        const m = showCardorSpeak(res.data, conv)
-        resolve(m)
-      } catch (err) {
-        reject(err)
-      }
-    })
+    showCardorSpeak(res.data, conv)
   } catch (err) {
     console.log(`\x1b[31merror:\x1b[0m ${err}`)
 
@@ -146,15 +140,7 @@ app.intent('random-anime', async conv => {
 
   try {
     const res = await getRaw('pops')
-
-    return new Promise((resolve, reject) => {
-      try {
-        const m = showCardorSpeak(res.data, conv)
-        resolve(m)
-      } catch (err) {
-        reject(err)
-      }
-    })
+    showCardorSpeak(res.data, conv)
   } catch (err) {
     console.log(`\x1b[31merror:\x1b[0m ${err}`)
 
@@ -167,15 +153,7 @@ app.intent('random-original', async conv => {
 
   try {
     const res = await getRaw('orig')
-
-    return new Promise((resolve, reject) => {
-      try {
-        const m = showCardorSpeak(res.data, conv)
-        resolve(m)
-      } catch (err) {
-        reject(err)
-      }
-    })
+    showCardorSpeak(res.data, conv)
   } catch (err) {
     console.log(`\x1b[31merror:\x1b[0m ${err}`)
 
@@ -188,15 +166,7 @@ app.intent('random-sega', async conv => {
 
   try {
     const res = await getRaw('sega')
-
-    return new Promise((resolve, reject) => {
-      try {
-        const m = showCardorSpeak(res.data, conv)
-        resolve(m)
-      } catch (err) {
-        reject(err)
-      }
-    })
+    showCardorSpeak(res.data, conv)
   } catch (err) {
     console.log(`\x1b[31merror:\x1b[0m ${err}`)
 
@@ -209,15 +179,7 @@ app.intent('random-game', async conv => {
 
   try {
     const res = await getRaw('game')
-
-    return new Promise((resolve, reject) => {
-      try {
-        const m = showCardorSpeak(res.data, conv)
-        resolve(m)
-      } catch (err) {
-        reject(err)
-      }
-    })
+    showCardorSpeak(res.data, conv)
   } catch (err) {
     console.log(`\x1b[31merror:\x1b[0m ${err}`)
 
@@ -230,15 +192,7 @@ app.intent('random-touhou', async conv => {
 
   try {
     const res = await getRaw('toho')
-
-    return new Promise((resolve, reject) => {
-      try {
-        const m = showCardorSpeak(res.data, conv)
-        resolve(m)
-      } catch (err) {
-        reject(err)
-      }
-    })
+    showCardorSpeak(res.data, conv)
   } catch (err) {
     console.log(`\x1b[31merror:\x1b[0m ${err}`)
 
