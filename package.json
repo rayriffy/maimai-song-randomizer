@@ -46,7 +46,7 @@
     }
   ],
   "dependencies": {
-    "actions-on-google": "^2.9.0",
+    "actions-on-google": "^2.10.0",
     "axios": "^0.19.0",
     "backpack-core": "^0.8.4",
     "basic-auth-connect": "^1.0.0",
